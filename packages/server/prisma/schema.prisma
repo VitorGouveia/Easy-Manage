@@ -10,6 +10,24 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Client {
+  id          String @id
+  name        String
+  phoneNumber String @unique
+  city        String
+  street      String
+  houseNumber String
+  opts        String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("clients")
+}
+
 model User {
   id       String @id
   name     String
@@ -20,6 +38,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   RefreshToken RefreshToken?
+  Client       Client[]
 
   @@map("users")
 }

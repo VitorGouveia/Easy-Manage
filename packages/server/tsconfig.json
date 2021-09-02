@@ -22,7 +22,8 @@
     "paths": {
       "@infra/*": ["./src/infra/*"],
       "@domain/*": ["./src/domain/*"],
-      "@user/*": ["./src/domain/user/*"]
+      "@user/*": ["./src/domain/user/*"],
+      "@client/*": ["./src/domain/client/*"]
     }
   },
   "exclude": ["node_modules"],
