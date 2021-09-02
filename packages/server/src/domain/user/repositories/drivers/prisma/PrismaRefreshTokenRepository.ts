@@ -10,11 +10,11 @@ export class PrismasRefreshTokenRepository implements IRefreshTokenRepository {
   constructor(private client: PrismaClient) {}
 
   create = async ({
-    ...data
+    ...refreshToken
   }: RefreshTokenRequest): Promise<RefreshTokenResponse> => {
     return await this.client.refreshToken.create({
       data: {
-        ...data
+        ...refreshToken
       }
     })
   }
