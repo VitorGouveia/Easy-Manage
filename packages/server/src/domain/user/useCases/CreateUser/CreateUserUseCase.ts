@@ -1,15 +1,13 @@
 import { User } from "@user/entities"
-import { IUserRepository, IRefreshTokenRepository } from "@user/repositories"
-import { AccessTokenProvider, RefreshTokenProvider } from "@user/providers"
+import { IUserRepository } from "@user/repositories"
+import { AccessTokenProvider } from "@user/providers"
 
 import { CreateUserRequestDTO, CreateUserResponseDTO } from "./CreateUserDTO"
 
 export class CreateUserUseCase {
   constructor(
     private userRepository: IUserRepository,
-    private refreshTokenRepository: IRefreshTokenRepository,
     private accessToken: AccessTokenProvider,
-    private refreshToken: RefreshTokenProvider,
     private user: User
   ) {}
 
@@ -36,18 +34,17 @@ export class CreateUserUseCase {
     /* save user */
     await this.userRepository.save(user)
 
-    /* create refresh & access token */
-    const { refreshToken } = await this.refreshToken.execute(user.id)
-
     const { accessToken } = await this.accessToken.execute({
+      id: user.id,
       name: user.name,
       email: user.email
     })
 
+    delete user.password
+
     return {
       message: "User Created!",
       user,
-      refreshToken,
       accessToken
     }
   }
