@@ -6,10 +6,12 @@
   "main": "index.js",
   "private": true,
   "scripts": {
+    "push": "prisma db push",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --no-notify src/index.ts",
     "start": "node dist/server.js",
-    "test": "jest"
+    "test": "jest",
+    "commit": "cz"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
@@ -21,10 +23,13 @@
     "@babel/node": "^7.10.1",
     "@babel/preset-env": "^7.10.2",
     "@babel/preset-typescript": "^7.10.1",
+    "@commitlint/cli": "^13.1.0",
     "@types/express": "^4.17.6",
     "@types/jest": "^26.0.0",
     "@types/node": "^16.7.10",
     "babel-plugin-module-resolver": "^4.0.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
     "jest": "^26.0.1",
     "prisma": "^2.30.3",
     "ts-jest": "^26.1.0",
