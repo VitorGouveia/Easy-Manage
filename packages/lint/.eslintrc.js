@@ -6,35 +6,25 @@ module.exports = {
     jest: true
   },
   extends: [
-    'plugin:react/recommended',
-    'standard',
-    'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
-    'prettier/standart',
-    'prettier/react'
+    "plugin:react/recommended",
+    "standard",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
   ],
-  parser: '@typescript-eslint/parser',
+  parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true
     },
     ecmaVersion: 11,
-    sourceType: 'module'
+    sourceType: "module"
   },
-  plugins: ['react', '@typescript-eslint', 'prettier'],
+  plugins: ["@typescript-eslint", "prettier"],
   rules: {
-    'prettier/prettier': 'error',
-    'space-before-function-paren': 'off',
-    'react/prop-types': 'off',
-    'no-extra-semi': 'error',
-    semi: 'always'
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {}
-    },
-    react: {
-      version: 'detect'
-    }
+    "prettier/prettier": "error",
+    "space-before-function-paren": "off",
+    "react/prop-types": "off",
+    "no-extra-semi": "error",
+    semi: "off"
   }
 }
