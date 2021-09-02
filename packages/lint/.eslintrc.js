@@ -16,6 +16,7 @@ module.exports = {
   plugins: ["@typescript-eslint", "prettier"],
   rules: {
     "no-empty-pattern": "off",
-    "explicit-module-boundary-types": "off"
+    "no-useless-constructor": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off"
   }
 }
