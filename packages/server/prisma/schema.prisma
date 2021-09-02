@@ -16,5 +16,17 @@ model User {
   email    String @unique
   password String
 
+  RefreshToken RefreshToken?
+
   @@map("users")
+}
+
+model RefreshToken {
+  id        String @id
+  expiresIn Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@map("refresh_token")
 }
