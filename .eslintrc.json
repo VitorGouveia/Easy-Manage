@@ -8,7 +8,7 @@
     "standard",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
-    "prettier/standart",
+    "prettier/standard"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -22,6 +22,6 @@
   "rules": {
     "prettier/prettier": "error",
     "space-before-function-paren": "off",
-    "no-extra-semi": "error",
+    "no-extra-semi": "error"
   }
 }
