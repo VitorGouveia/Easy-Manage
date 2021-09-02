@@ -8,7 +8,7 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --exit-child --no-notify src/index.ts",
-    "push": "prisma db push",
+    "push": "prisma db push --accept-data-loss",
     "start": "node dist/server.js",
     "test": "jest"
   },

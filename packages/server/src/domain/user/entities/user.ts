@@ -16,14 +16,11 @@ interface Options {
 export class User {
   public readonly id: string
 
-  public readonly createdAt: number
-  public updatedAt: number
-
   public name: string
   public email: string
   public password: string
 
-  constructor(props: UserProps, { id, isHashed, createdAt }: Options = {}) {
+  constructor(props: UserProps, { id, isHashed }: Options = {}) {
     Object.assign(this, props)
 
     if (!id) {
@@ -31,14 +28,6 @@ export class User {
     } else {
       this.id = id
     }
-
-    if (!createdAt) {
-      this.createdAt = Number(new Date().getTime())
-    } else {
-      this.createdAt = Number(createdAt)
-    }
-
-    this.updatedAt = Number(new Date().getTime())
 
     if (isHashed) {
       this.password = props.password
