@@ -1,12 +1,12 @@
 {
   "name": "@fastgas/lint",
   "version": "0.0.1",
-  "description": "The linting configuration for fastgas microservices",
-  "main": ".eslintrc.js",
-  "repository": "https://github.com/VitorGouveia/fastgas",
-  "author": "Vitor Gouveia",
-  "license": "MIT",
   "private": true,
+  "description": "The linting configuration for fastgas microservices",
+  "repository": "https://github.com/VitorGouveia/fastgas",
+  "license": "MIT",
+  "author": "Vitor Gouveia",
+  "main": ".eslintrc.js",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.30.0",
     "@typescript-eslint/parser": "^4.30.0",
@@ -17,6 +17,7 @@
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-promise": "^5.1.0",
     "prettier": "^2.3.2"
   }
 }

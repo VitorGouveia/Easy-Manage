@@ -4,20 +4,9 @@
   "workspaces": [
     "packages/*"
   ],
-  "devDependencies": {
-    "@commitlint/cli": "9.1.2",
-    "@commitlint/config-conventional": "9.1.2",
-    "@commitlint/core": "9.1.2",
-    "cz-conventional-changelog": "3.2.0",
-    "husky": "4.2.5",
-    "lint-staged": "10.2.11",
-    "sort-package-json": "1.44.0",
-    "@fastgas/lint": "*",
-    "typescript": "^4.4.2"
-  },
   "scripts": {
     "commit": "cz",
-    "lint": "eslint --ext .tsx,.ts,.js src/"
+    "lint": "eslint --fix --ext .tsx,.ts,.js packages/server/src/"
   },
   "husky": {
     "hooks": {
@@ -37,5 +26,16 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "9.1.2",
+    "@commitlint/config-conventional": "9.1.2",
+    "@commitlint/core": "9.1.2",
+    "@fastgas/lint": "*",
+    "cz-conventional-changelog": "3.2.0",
+    "husky": "4.2.5",
+    "lint-staged": "10.2.11",
+    "sort-package-json": "1.44.0",
+    "typescript": "^4.4.2"
   }
 }
