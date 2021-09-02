@@ -1,4 +1,6 @@
-import { Express, Router } from 'express'
+import { Express, Router } from "express"
+
+import { ErrorMiddleware } from "../middleware/error"
 
 export interface ServerProps {
   port: string
@@ -9,6 +11,8 @@ export interface ServerProps {
 
 export const server = ({ port, app, router, cluster }: ServerProps) => {
   app.use(router)
+
+  app.use(ErrorMiddleware)
 
   if (cluster) {
     cluster({ app, port: Number(port) })
