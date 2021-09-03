@@ -13,6 +13,7 @@ router.post("/user/token/refresh", accessTokenAuth, user.refreshToken)
 
 /* CLIENT */
 router.post("/client", accessTokenAuth, client.create)
-router.delete("/client", accessTokenAuth, client.delete)
+router.delete("/client/:id", accessTokenAuth, client.delete)
+router.patch("/client/:id", accessTokenAuth, client.update)
 
 router.post("/login", user.login)

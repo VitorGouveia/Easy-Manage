@@ -22,6 +22,20 @@ export class PrismaClientRepository implements IClientRepository {
     })
   }
 
+  update = async (
+    id: string,
+    { ...client }: ClientRequest
+  ): Promise<ClientResponse> => {
+    return await this.client.client.update({
+      where: {
+        id
+      },
+      data: {
+        ...client
+      }
+    })
+  }
+
   save = async ({ ...rest }: ClientRequest): Promise<void> => {
     await this.client.client.create({
       data: {

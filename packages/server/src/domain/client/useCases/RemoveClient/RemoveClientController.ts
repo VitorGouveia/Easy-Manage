@@ -3,10 +3,7 @@ import { Request, Response } from "express"
 import { Controller } from "@infra/http/interface/Controller"
 import { ok, clientError } from "@infra/http/interface/HttpResponse"
 
-import {
-  RemoveClientRequestDTO,
-  RemoveClientResponseDTO
-} from "./RemoveClientDTO"
+import { RemoveClientResponseDTO } from "./RemoveClientDTO"
 import { RemoveClientUseCase } from "./RemoveClientUseCase"
 
 export class RemoveClientController implements Controller {
@@ -14,9 +11,9 @@ export class RemoveClientController implements Controller {
 
   async handle(request: Request, response: Response): Promise<Response> {
     try {
-      const data: RemoveClientRequestDTO = request.body
+      const id = request.params.id
 
-      const caseResponse = await this.removeClientUseCase.execute(data)
+      const caseResponse = await this.removeClientUseCase.execute({ id })
 
       const { body, statusCode } = ok<RemoveClientResponseDTO>(caseResponse)
 
