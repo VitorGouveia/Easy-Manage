@@ -13,7 +13,10 @@ export const SEO: FC = (): JSX.Element => {
       />
       <meta name="keywords" content="Inventory, Managment, Stock" />
       <meta name="author" content="Vitor Gouveia" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
+      />
 
       {/* SEO */}
       <link

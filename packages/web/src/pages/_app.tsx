@@ -11,7 +11,9 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     <>
       <SEO />
       <ThemeProvider theme={sportsbetDark}>
-        <Component {...pageProps} />
+        <main style={{ WebkitTapHighlightColor: "transparent" }}>
+          <Component {...pageProps} />
+        </main>
       </ThemeProvider>
     </>
   )
