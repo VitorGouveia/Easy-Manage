@@ -45,12 +45,9 @@ export class CreateClientUseCase {
     })
     await this.clientRepository.save(client)
 
-    delete user.password
-
     return {
       message: "Client created with success!",
-      client,
-      user
+      client
     }
   }
 }

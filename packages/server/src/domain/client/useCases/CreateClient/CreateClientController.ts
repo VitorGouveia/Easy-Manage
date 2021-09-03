@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 
 import { Controller } from "@infra/http/interface/Controller"
-import { ok, clientError } from "@infra/http/interface/HttpResponse"
+import { created, clientError } from "@infra/http/interface/HttpResponse"
 
 import {
   CreateClientRequestDTO,
@@ -26,7 +26,8 @@ export class CreateClientController implements Controller {
       }
       const caseResponse = await this.createClientUseCase.execute(data)
 
-      const { body, statusCode } = ok<CreateClientResponseDTO>(caseResponse)
+      const { body, statusCode } =
+        created<CreateClientResponseDTO>(caseResponse)
 
       return response.status(statusCode).json(body)
     } catch (error) {
