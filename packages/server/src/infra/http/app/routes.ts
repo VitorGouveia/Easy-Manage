@@ -7,10 +7,12 @@ import { client } from "@domain/client"
 
 export const router = Router()
 
-/* create user route */
+/* USER */
 router.post("/user", user.create)
-
 router.post("/user/token/refresh", accessTokenAuth, user.refreshToken)
 
-router.post("/login", user.login)
+/* CLIENT */
 router.post("/client", accessTokenAuth, client.create)
+router.delete("/client", accessTokenAuth, client.delete)
+
+router.post("/login", user.login)
