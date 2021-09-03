@@ -1,10 +1,11 @@
 {
-  "name": "node-setup",
-  "version": "1.0.0",
+  "name": "@fastgas/server",
+  "version": "0.0.1",
   "private": true,
+  "description": "The back-end of the FastGas inventory app",
   "license": "MIT",
-  "author": "Diego Fernandes <diego.schell.f@gmail.com>",
-  "main": "index.js",
+  "author": "Vitor Gouveia <vitor.gouveia@aluno.etecjrm.com.br>",
+  "main": "dist/index.js",
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "dev": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --ignore-watch node_modules --exit-child --no-notify src/index.ts",
