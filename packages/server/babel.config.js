@@ -17,8 +17,8 @@ module.exports = {
         alias: {
           "@infra": "./src/infra",
           "@domain": "./src/domain",
-          "@user": "./src/user",
-          "@client": "./src/client"
+          "@user": "./src/domain/user",
+          "@client": "./src/domain/client"
         }
       }
     ]
