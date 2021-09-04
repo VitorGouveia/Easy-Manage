@@ -15,11 +15,13 @@
     "@heathmont/moon-components": "^6.12.1",
     "@heathmont/moon-core": "^6.13.0",
     "@heathmont/moon-themes": "^6.8.0",
+    "axios": "^0.21.1",
     "next": "11.1.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-hook-form": "^7.14.2",
-    "styled-components": "^5.3.1"
+    "styled-components": "^5.3.1",
+    "swr": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^16.7.10",

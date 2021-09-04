@@ -3,7 +3,7 @@ import { Express, Router } from "express"
 import { ErrorMiddleware } from "../middleware/error"
 
 export interface ServerProps {
-  port: string
+  port: number
   app: Express
   router: Router
   cluster?: ({}) => void
