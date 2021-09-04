@@ -22,4 +22,4 @@ const pwaPlugin = withPWA({
   }
 })
 
-module.exports = withPlugins([pwaPlugin])
+// module.exports = withPlugins()

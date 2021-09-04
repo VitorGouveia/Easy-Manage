@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { AppProps } from "next/app"
-import { ThemeProvider, sportsbetDark } from "@heathmont/moon-themes"
+import { ThemeProvider, bitcasinoDark } from "@heathmont/moon-themes"
 
 import { SEO } from "../document"
 
@@ -10,7 +10,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <>
       <SEO />
-      <ThemeProvider theme={sportsbetDark}>
+      <ThemeProvider theme={bitcasinoDark}>
         <main style={{ WebkitTapHighlightColor: "transparent" }}>
           <Component {...pageProps} />
         </main>
