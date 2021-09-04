@@ -1,17 +1,38 @@
 import { FC } from "react"
+import { useForm } from "react-hook-form"
 
 import { TextInput, Button } from "@heathmont/moon-components"
 import { ArrowsLeft } from "@heathmont/moon-icons"
-
-import { useForm } from "react-hook-form"
+import { useAuth } from "@hooks"
+import { Link } from "@components"
 
 import { RegisterContainer } from "./styles"
 
 const Register: FC = () => {
+  const { signIn } = useAuth()
   const { register, handleSubmit } = useForm()
 
-  const handleSignIn = data => {
-    console.log(data)
+  type SignInRequest = {
+    name: string
+    email: string
+    password: string
+  }
+
+  const handleSignIn = async ({ name, email, password }: SignInRequest) => {
+    try {
+      await signIn({
+        name,
+        email,
+        password
+      })
+    } catch (error) {
+      console.log(error.message)
+      return (
+        <>
+          <h1>somethign went wrong</h1>
+        </>
+      )
+    }
   }
 
   return (
@@ -52,8 +73,10 @@ const Register: FC = () => {
         </form>
       </main>
       <footer>
-        <ArrowsLeft color="white" fontSize="1rem" />
-        <small>Já tenho conta?</small>
+        <Link name="go to login" url="/login">
+          <ArrowsLeft color="white" fontSize="1rem" />
+          <small>Já tenho conta?</small>
+        </Link>
       </footer>
     </RegisterContainer>
   )
