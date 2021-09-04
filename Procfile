@@ -1,0 +1,1 @@
+web: yarn workspace @fastgas/server deploy
