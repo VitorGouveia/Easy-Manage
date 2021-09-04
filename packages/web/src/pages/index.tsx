@@ -1,15 +1,11 @@
-import { Container } from "./styles"
-
-import { Header } from "@components"
-
 const Home = () => {
   return (
-    <Container>
-      <Header />
+    <>
       <section>
-        <h1>content</h1>
+        {/* if not auth, redirect to login page */}
+        <h1>crie sua conta</h1>
       </section>
-    </Container>
+    </>
   )
 }
 
