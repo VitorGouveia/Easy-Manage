@@ -1,10 +1,12 @@
 import { HeaderContainer, Prop, Title } from "./styles"
 
 import { Tabs, TabLink, Avatar, Button } from "@heathmont/moon-components"
-
 import { GenericUser, GenericUsers } from "@heathmont/moon-icons"
+import { Link } from "@components"
+import { useAuth } from "@hooks"
 
 export const Header = () => {
+  const { isAuthenticated, user } = useAuth()
   return (
     <HeaderContainer>
       <Prop isLogo={true}>
@@ -24,18 +26,31 @@ export const Header = () => {
 
       <Prop isUser={true}>
         {/* if is looged */}
-        <Avatar
-          imageUrl={`https://avatars.dicebear.com/api/jdenticon/${new Date().getTime()}.svg`}
-          size="medium"
-        />
-        {/* else */}
-        <Button iconLeft={<GenericUser />} variant="primary">
-          Log In
-        </Button>
+        {isAuthenticated ? (
+          <>
+            <Avatar
+              name={user.name}
+              imageUrl={`https://avatars.dicebear.com/api/jdenticon/${new Date().getTime()}.svg`}
+              size="medium"
+            />
+            <span>{user.name}</span>
+          </>
+        ) : (
+          <>
+            <Link name="login" url="/login">
+              <Button iconLeft={<GenericUser />} variant="primary">
+                Log In
+              </Button>
+            </Link>
 
-        <Button iconLeft={<GenericUsers />} variant="tertiary">
-          Register
-        </Button>
+            <Link name="register" url="/register">
+              <Button iconLeft={<GenericUsers />} variant="tertiary">
+                Register
+              </Button>
+            </Link>
+          </>
+        )}
+        {/* else */}
       </Prop>
     </HeaderContainer>
   )
