@@ -7,6 +7,30 @@ type RegisterRequestProps = {
   password: string
 }
 
+type LoginRequestProps = {
+  email: string
+  password: string
+}
+
+type LoginResponseProps = {
+  data: {
+    accessToken: string
+    refreshToken: {
+      id: string
+      expiresIn: number
+      createdAt: string
+    }
+    message: string
+    user: {
+      email: string
+      name: string
+      id: string
+      createdAt: string
+      updatedAt: string
+    }
+  }
+}
+
 type RegisterResponseProps = {
   data: {
     accessToken: string
@@ -41,4 +65,22 @@ export const SignInRequest = async ({
 
 export const getUserInformation = (token: string) => {
   return decode(token)
+}
+
+export const LogInRequest = async ({
+  email,
+  password
+}: LoginRequestProps): Promise<LoginResponseProps> => {
+  const { data }: LoginResponseProps = await api({
+    method: "POST",
+    url: "/login",
+    data: {
+      email,
+      password
+    }
+  })
+
+  return {
+    data
+  }
 }

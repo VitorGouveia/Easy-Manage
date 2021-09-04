@@ -6,7 +6,8 @@ import { Link } from "@components"
 import { useAuth } from "@hooks"
 
 export const Header = () => {
-  const { isAuthenticated, user } = useAuth()
+  const { isAuthenticated, user, clean } = useAuth()
+
   return (
     <HeaderContainer>
       <Prop isLogo={true}>
@@ -34,6 +35,12 @@ export const Header = () => {
               size="medium"
             />
             <span>{user.name}</span>
+
+            <Link onClick={() => clean()} name="login" url="/login">
+              <Button iconLeft={<GenericUser />} variant="primary">
+                Log out
+              </Button>
+            </Link>
           </>
         ) : (
           <>

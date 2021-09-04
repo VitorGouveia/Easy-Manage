@@ -25,14 +25,14 @@ type Response<T> = {
 
 export function useFetch<T>(
   url: URLKeys,
-  { custom, method, data }: Request = {}
+  { custom, method }: Request = {}
 ): Response<T> {
   if (custom) {
     axios.get(url)
   }
 
   if (method) {
-    axios({ method, url, data })
+    axios({ method, url })
   }
 
   const { data, error, mutate } = useSWR<Data, Error>(url, async url => {

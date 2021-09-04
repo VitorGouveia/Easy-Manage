@@ -26,7 +26,6 @@ const Register: FC = () => {
         password
       })
     } catch (error) {
-      console.log(error.message)
       return (
         <>
           <h1>somethign went wrong</h1>

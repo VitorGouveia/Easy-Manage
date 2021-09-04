@@ -1,2 +1,2 @@
 export { api } from "./api"
-export { SignInRequest, getUserInformation } from "./auth"
+export { SignInRequest, getUserInformation, LogInRequest } from "./auth"
