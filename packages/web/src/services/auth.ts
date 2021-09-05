@@ -102,3 +102,35 @@ export const LogInRequest = async ({
     data
   }
 }
+
+type Client = {
+  id: string
+  name: string
+  phoneNumber: string
+  city: string
+  street: string
+  houseNumber: string
+  opts: string
+}
+
+type GetClientsData = {
+  data: {
+    message: string
+    clients: Client[]
+  }
+}
+
+export const GetClients = async (token: string) => {
+  const { data }: GetClientsData = await api({
+    method: "GET",
+    url: "/client",
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  })
+  const { clients } = data
+
+  return {
+    clients
+  }
+}

@@ -10,7 +10,6 @@ import { HeaderContainer, Prop, Title } from "./styles"
 export const Header = () => {
   const { isAuthenticated, user, clean } = useAuth()
   const { pathname } = useRouter()
-  console.log(pathname)
 
   return (
     <HeaderContainer>
@@ -22,26 +21,25 @@ export const Header = () => {
       <Prop isTabs={true}>
         <Tabs
           items={[
-            <Link onClick={() => clean()} name="login" url="/clients">
+            <Link name="login" url="/client">
               <TabLink
                 href="#1"
-                className={pathname === "/clients" ? "active" : ""}
+                className={pathname === "/client" ? "active" : ""}
               >
                 Clientes
               </TabLink>
             </Link>,
 
-            <Link onClick={() => clean()} name="login" url="/items">
+            <Link name="login" url="/items">
               <TabLink
                 href="#2"
                 className={pathname === "/items" ? "active" : ""}
               >
                 Items
               </TabLink>
-              ,
             </Link>,
 
-            <Link onClick={() => clean()} name="login" url="/dash">
+            <Link name="login" url="/dash">
               <TabLink
                 href="#3"
                 className={pathname === "/dash" ? "active" : ""}
@@ -59,7 +57,7 @@ export const Header = () => {
           <>
             <Avatar
               name={user.name}
-              imageUrl={`https://avatars.dicebear.com/api/jdenticon/${new Date().getTime()}.svg`}
+              imageUrl={`https://avatars.dicebear.com/api/jdenticon/${user.name}.svg`}
               size="medium"
             />
             <span>{user.name}</span>
