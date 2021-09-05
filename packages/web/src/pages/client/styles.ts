@@ -29,8 +29,58 @@ export const ClientContainer = styled.section`
 
   & > section {
     grid-area: new;
+    display: flex;
+    flex-direction: column;
+    color: #dedede;
+    align-items: center;
+    justify-content: center;
 
     height: 100%;
+  }
+
+  form {
+    width: 100%;
+    padding: 1rem;
+
+    span {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    & > div label {
+      input {
+        border-radius: 0;
+      }
+
+      &:first-child input {
+        border-radius: 0.5rem;
+        border-end-end-radius: 0;
+        border-end-start-radius: 0;
+      }
+
+      &:last-child input {
+        border-radius: 0.5rem;
+        border-start-start-radius: 0;
+        border-start-end-radius: 0;
+      }
+    }
+
+    button {
+      margin-top: 1.4rem;
+      background: ${props => props.theme.color.dodoria[100]};
+
+      &:hover,
+      &:focus {
+        background: ${props => props.theme.color.dodoria[10]} !important;
+      }
+    }
   }
 `
 
