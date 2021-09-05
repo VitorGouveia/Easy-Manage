@@ -11,6 +11,8 @@ var _RemoveClient = require("./useCases/RemoveClient");
 
 var _UpdateClient = require("./useCases/UpdateClient");
 
+var _ListClient = require("./useCases/ListClient");
+
 const client = {
   create: async (request, response) => {
     return _CreateClient.createClientController.handle(request, response);
@@ -20,6 +22,9 @@ const client = {
   },
   update: async (request, response) => {
     return _UpdateClient.updateClientController.handle(request, response);
+  },
+  list: async (request, response) => {
+    return _ListClient.listClientController.handle(request, response);
   }
 };
 exports.client = client;

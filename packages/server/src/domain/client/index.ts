@@ -3,6 +3,7 @@ import { Request, Response } from "express"
 import { createClientController } from "./useCases/CreateClient"
 import { removeClientController } from "./useCases/RemoveClient"
 import { updateClientController } from "./useCases/UpdateClient"
+import { listClientController } from "./useCases/ListClient"
 
 export const client = {
   create: async (request: Request, response: Response) => {
@@ -15,5 +16,9 @@ export const client = {
 
   update: async (request: Request, response: Response) => {
     return updateClientController.handle(request, response)
+  },
+
+  list: async (request: Request, response: Response) => {
+    return listClientController.handle(request, response)
   }
 }
