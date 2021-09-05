@@ -48,13 +48,26 @@ export const Auth: FC = ({ children }) => {
     const { "fastgas.token": token } = parseCookies()
 
     if (token) {
-      const { name, email, id } = getUserInformation(token) as User
-      setUser({
-        name,
-        email,
-        id
+      getUserInformation(token).then(({ user, refreshToken, accessToken }) => {
+        setCookie(undefined, "fastgas.token", accessToken, {
+          maxAge: 60 * 60 * 24 // 24 hrs
+        })
+
+        setRefreshToken(refreshToken)
+
+        const { id, name, email } = user
+
+        setUser({
+          id,
+          name,
+          email
+        })
+
+        push("/")
       })
     }
+
+    push("/login")
   }, [])
 
   const signIn = async ({ name, email, password }: SignInData) => {
@@ -99,7 +112,6 @@ export const Auth: FC = ({ children }) => {
     setUser(null)
     destroyCookie(undefined, "fastgas.token")
   }
-  console.log(user)
 
   return (
     <AuthContext.Provider

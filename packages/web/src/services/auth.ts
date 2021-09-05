@@ -63,8 +63,26 @@ export const SignInRequest = async ({
   }
 }
 
-export const getUserInformation = (token: string) => {
-  return decode(token)
+export const getUserInformation = async (token: string) => {
+  const { data }: LoginResponseProps = await api({
+    method: "POST",
+    url: "/login",
+    headers: {
+      authorization: `Bearer ${token}`
+    },
+    data: {
+      email: "",
+      password: ""
+    }
+  })
+
+  const { accessToken, user, refreshToken } = data
+
+  return {
+    refreshToken,
+    accessToken,
+    user
+  }
 }
 
 export const LogInRequest = async ({

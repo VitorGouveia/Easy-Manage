@@ -27,7 +27,7 @@ export const Header = () => {
 
       <Prop isUser={true}>
         {/* if is looged */}
-        {isAuthenticated ? (
+        {isAuthenticated === true ? (
           <>
             <Avatar
               name={user.name}

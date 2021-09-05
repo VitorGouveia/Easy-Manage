@@ -64,6 +64,8 @@ export const Prop = styled.section<PropProps>`
     white-space: normal;
     border-radius: 0.2rem;
     height: auto;
+    font-size: 0.6rem;
+    padding: 0 0.4rem;
 
     &:first-of-type {
       background: ${props => props.theme.color.dodoria[100]};
@@ -114,7 +116,7 @@ export const Prop = styled.section<PropProps>`
 `
 
 export const Title = styled.h1`
-  font-size: 12px;
+  font-size: clamp(0.5rem, -0.3rem + 1.6013vw, 2rem);
   font-weight: bold;
   padding: 0.3rem;
   border-radius: 0.3rem;
