@@ -9799,6 +9799,11 @@ use-callback-ref@^1.2.3, use-callback-ref@^1.2.5:
   resolved "https://registry.yarnpkg.com/use-callback-ref/-/use-callback-ref-1.2.5.tgz#6115ed242cfbaed5915499c0a9842ca2912f38a5"
   integrity sha512-gN3vgMISAgacF7sqsLPByqoePooY3n2emTH59Ur5d/M8eg4WTWu1xp8i8DHjohftIyEx0S08RiYxbffr4j8Peg==
 
+use-mouse-action@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/use-mouse-action/-/use-mouse-action-2.0.0.tgz#ef5ec939c56408696c34f0694ca4f1359a9c2003"
+  integrity sha512-WhSWuJitFCMVrveLKPoWYel0hDnKbveDuXSBFpqLTg8Zuz0RD0/oy0DTk4HVHHANJAO7a79wggTckOD5siC2Hg==
+
 use-sidecar@^1.0.1, use-sidecar@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/use-sidecar/-/use-sidecar-1.0.5.tgz#ffff2a17c1df42e348624b699ba6e5c220527f2b"
