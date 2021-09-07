@@ -24,6 +24,7 @@ export const ClientContainer = styled.section`
   }
 
   h1 {
+    color: #dedede;
     font-size: 1rem;
     text-align: center;
     width: 100%;
@@ -105,9 +106,51 @@ export const Card = styled.li<CardProps>`
   padding: 1rem;
   color: #dedede;
   border-radius: 0.5rem;
+  margin: 1rem 0;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background: ${props => props.theme.color.gohan[100]};
+
+  text-align: left;
+  position: relative;
+
+  svg {
+    width: 1.5rem;
+    transition: all 200ms;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
+  button {
+    border-radius: 50%;
+    position: absolute;
+    right: 0.4rem;
+
+    &[data-attr="remove"] {
+      bottom: 0.4rem;
+    }
+
+    &[data-attr="edit"] {
+      top: 0.4rem;
+    }
+  }
+
+  p {
+    width: 100%;
+  }
+
+  p + strong {
+    margin-top: 2rem;
+  }
+
+  strong {
+    width: 100%;
+    margin-bottom: 0.3rem;
+  }
 `
 
 export const CardContainer = styled.ul`
@@ -115,8 +158,4 @@ export const CardContainer = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-
-  h1 {
-    margin-bottom: 1rem;
-  }
 `

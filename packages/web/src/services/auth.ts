@@ -134,3 +134,47 @@ export const GetClients = async (token: string) => {
     clients
   }
 }
+
+type CreateClientResponse = {
+  data: {
+    message: string
+    client: Client
+  }
+}
+
+export const CreateClient = async (
+  client: Omit<Client, "id">,
+  accessToken: string
+) => {
+  const { data }: CreateClientResponse = await api({
+    method: "POST",
+    url: "/client",
+    headers: {
+      authorization: `Bearer ${accessToken}`
+    },
+    data: {
+      ...client
+    }
+  })
+
+  return {
+    data
+  }
+}
+
+export const RemoveClient = async (
+  clientId: string,
+  userId: string,
+  accessToken: string
+) => {
+  await api({
+    method: "DELETE",
+    url: `/client/${clientId}`,
+    headers: {
+      authorization: `Bearer ${accessToken}`
+    },
+    data: {
+      id: userId
+    }
+  })
+}

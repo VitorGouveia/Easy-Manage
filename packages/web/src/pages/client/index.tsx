@@ -1,12 +1,14 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import { GetServerSideProps } from "next"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
 
-import { GetClients } from "@services"
+import { GetClients, CreateClient, RemoveClient } from "@services"
+import { FilesRemove, GenericEdit } from "@heathmont/moon-icons"
 import { Button, Search, TextInput } from "@heathmont/moon-components"
 
 import { ClientContainer, CardContainer, Card, NewClientForm } from "./styles"
+import { useAuth } from "@hooks"
 
 type Client = {
   id: string
@@ -22,38 +24,78 @@ type ClientProps = {
   clients: Client[]
 }
 
+type ClientForm = {
+  id: string
+  name: string
+  phoneNumber: string
+  city: string
+  houseNumber: string
+  street: string
+  opts: string
+}
+
 const Client: FC<ClientProps> = ({ clients }) => {
   const { register, handleSubmit } = useForm()
+  const [clientList, setClientList] = useState<ClientForm[]>([])
+  const { accessToken, user } = useAuth()
 
-  const createClient = data => {
-    console.log(data)
+  useEffect(() => {
+    setClientList(clients)
+  }, [])
+
+  const createClient = async (data: Omit<ClientForm, "id">) => {
+    const { data: response } = await CreateClient({ ...data }, accessToken)
+    setClientList([...clientList, response.client])
   }
-  console.log(clients.length)
+
+  const handleRemoveClient = async (clientId: string) => {
+    await RemoveClient(clientId, user.id, accessToken)
+
+    setClientList(clientList.filter(client => client.id !== clientId))
+  }
+
   return (
     <ClientContainer>
       <div className="search">
         <Search loadingMessage={<span>procurando clients</span>} />
       </div>
 
-      {clients.length === 0 ? (
+      {clientList.length === 0 ? (
         <CardContainer>
           <h1>Todos os Clientes</h1>
 
           <Card full={true}>
-            <h1>No clients yet.</h1>
+            <h5>No clients yet.</h5>
           </Card>
         </CardContainer>
       ) : (
         <ul>
-          {clients.map(client => {
+          {clientList.map(client => {
             return (
               <Card key={client.id}>
-                <h1>{client.name}</h1>
-                <h2>{client.houseNumber}</h2>
-                <h3>{client.opts}</h3>
-                <h4>{client.phoneNumber}</h4>
-                <h5>{client.street}</h5>
-                <h6>{client.city}</h6>
+                <strong>Informações:</strong>
+                <p>{client.name}</p>
+                <p>{client.phoneNumber}</p>
+
+                <strong>Localização:</strong>
+                <p>
+                  {client.street} - {client.city}
+                </p>
+                <p>casa nº: {client.houseNumber}</p>
+
+                <strong>Opcional:</strong>
+                <p>{client.opts}</p>
+
+                <Button
+                  onClick={() => handleRemoveClient(client.id)}
+                  data-attr="remove"
+                >
+                  <FilesRemove fontSize="2rem" />
+                </Button>
+
+                <Button data-attr="edit">
+                  <GenericEdit fontSize="2rem" />
+                </Button>
               </Card>
             )
           })}
@@ -77,7 +119,7 @@ const Client: FC<ClientProps> = ({ clients }) => {
               type="tel"
               label="telephone"
               placeholder="telefone"
-              {...register("telephone")}
+              {...register("phoneNumber")}
             />
             <TextInput
               required
