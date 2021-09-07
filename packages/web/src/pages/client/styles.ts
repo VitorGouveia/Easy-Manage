@@ -34,7 +34,6 @@ export const ClientContainer = styled.section`
     color: #dedede;
     align-items: center;
     justify-content: center;
-
     height: 100%;
   }
 
@@ -86,10 +85,8 @@ export const ClientContainer = styled.section`
 
 export const Card = styled.li`
   padding: 1rem;
-
   color: #dedede;
   border-radius: 0.5rem;
-
   display: flex;
   flex-direction: column;
   background: ${props => props.theme.color.gohan[100]};
