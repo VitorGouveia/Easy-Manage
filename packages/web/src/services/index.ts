@@ -3,5 +3,7 @@ export {
   SignInRequest,
   getUserInformation,
   LogInRequest,
-  GetClients
+  GetClients,
+  CreateClient,
+  RemoveClient
 } from "./auth"

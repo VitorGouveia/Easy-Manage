@@ -21,6 +21,8 @@ type RefreshToken = {
   createdAt: string
 }
 
+type AccessToken = string
+
 type User = {
   id: string
   name: string
@@ -30,6 +32,7 @@ type User = {
 type AuthContextType = {
   isAuthenticated: boolean
   user: User
+  accessToken: AccessToken
   refreshToken: RefreshToken
   signIn: ({}: SignInData) => Promise<void>
   logIn: ({}: LogInData) => Promise<void>
@@ -39,6 +42,7 @@ type AuthContextType = {
 export const AuthContext = createContext({} as AuthContextType)
 
 export const Auth: FC = ({ children }) => {
+  const [accessToken, setAccessToken] = useState<AccessToken | null>(null)
   const [refreshToken, setRefreshToken] = useState<RefreshToken | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const { push } = useRouter()
@@ -53,6 +57,7 @@ export const Auth: FC = ({ children }) => {
           maxAge: 60 * 60 * 24 // 24 hrs
         })
 
+        setAccessToken(accessToken)
         setRefreshToken(refreshToken)
 
         const { id, name, email } = user
@@ -80,6 +85,8 @@ export const Auth: FC = ({ children }) => {
 
     const { accessToken, user } = data
 
+    setAccessToken(accessToken)
+
     setCookie(undefined, "fastgas.token", accessToken, {
       maxAge: 60 * 60 * 24 // 24 hrs
     })
@@ -97,6 +104,7 @@ export const Auth: FC = ({ children }) => {
 
     const { accessToken, refreshToken, user } = data
 
+    setAccessToken(accessToken)
     setRefreshToken(refreshToken)
     setUser(user)
 
@@ -108,6 +116,7 @@ export const Auth: FC = ({ children }) => {
   }
 
   const clean = () => {
+    setAccessToken(null)
     setRefreshToken(null)
     setUser(null)
     destroyCookie(undefined, "fastgas.token")
@@ -115,7 +124,15 @@ export const Auth: FC = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, refreshToken, signIn, logIn, clean }}
+      value={{
+        isAuthenticated,
+        user,
+        refreshToken,
+        signIn,
+        logIn,
+        clean,
+        accessToken
+      }}
     >
       {children}
     </AuthContext.Provider>
