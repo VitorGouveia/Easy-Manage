@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form"
 import { GetClients } from "@services"
 import { Button, Search, TextInput } from "@heathmont/moon-components"
 
-import { ClientContainer, Card } from "./styles"
+import { ClientContainer, CardContainer, Card, NewClientForm } from "./styles"
 
 type Client = {
   id: string
@@ -28,32 +28,42 @@ const Client: FC<ClientProps> = ({ clients }) => {
   const createClient = data => {
     console.log(data)
   }
-
+  console.log(clients.length)
   return (
     <ClientContainer>
       <div className="search">
         <Search loadingMessage={<span>procurando clients</span>} />
       </div>
 
-      <ul>
-        {clients.map(client => {
-          return (
-            <Card key={client.id}>
-              <h1>{client.name}</h1>
-              <h2>{client.houseNumber}</h2>
-              <h3>{client.opts}</h3>
-              <h4>{client.phoneNumber}</h4>
-              <h5>{client.street}</h5>
-              <h6>{client.city}</h6>
-            </Card>
-          )
-        })}
-      </ul>
+      {clients.length === 0 ? (
+        <CardContainer>
+          <h1>Todos os Clientes</h1>
+
+          <Card full={true}>
+            <h1>No clients yet.</h1>
+          </Card>
+        </CardContainer>
+      ) : (
+        <ul>
+          {clients.map(client => {
+            return (
+              <Card key={client.id}>
+                <h1>{client.name}</h1>
+                <h2>{client.houseNumber}</h2>
+                <h3>{client.opts}</h3>
+                <h4>{client.phoneNumber}</h4>
+                <h5>{client.street}</h5>
+                <h6>{client.city}</h6>
+              </Card>
+            )
+          })}
+        </ul>
+      )}
 
       <section>
         <h1>Novo Cliente</h1>
 
-        <form onSubmit={handleSubmit(createClient)}>
+        <NewClientForm onSubmit={handleSubmit(createClient)}>
           <div className="input-wrapper">
             <TextInput
               required
@@ -102,7 +112,7 @@ const Client: FC<ClientProps> = ({ clients }) => {
           <Button fullWidth variant="primary">
             Criar Cliente
           </Button>
-        </form>
+        </NewClientForm>
       </section>
     </ClientContainer>
   )
