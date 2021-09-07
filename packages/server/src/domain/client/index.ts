@@ -4,6 +4,7 @@ import { createClientController } from "./useCases/CreateClient"
 import { removeClientController } from "./useCases/RemoveClient"
 import { updateClientController } from "./useCases/UpdateClient"
 import { listClientController } from "./useCases/ListClient"
+import { searchClientController } from "./useCases/SearchClient"
 
 export const client = {
   create: async (request: Request, response: Response) => {
@@ -20,5 +21,9 @@ export const client = {
 
   list: async (request: Request, response: Response) => {
     return listClientController.handle(request, response)
+  },
+
+  search: async (request: Request, response: Response) => {
+    return searchClientController.handle(request, response)
   }
 }

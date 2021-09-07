@@ -6,6 +6,20 @@ import { PrismaClient } from "@infra/prisma"
 export class PrismaClientRepository implements IClientRepository {
   constructor(private client: PrismaClient) {}
 
+  search = async (userId: string, query: string): Promise<ClientResponse[]> => {
+    return await this.client.client.findMany({
+      where: {
+        userId,
+        name: {
+          search: query
+        },
+        opts: {
+          search: query
+        }
+      }
+    })
+  }
+
   find = async (id: string): Promise<ClientResponse> => {
     return await this.client.client.findUnique({
       where: {

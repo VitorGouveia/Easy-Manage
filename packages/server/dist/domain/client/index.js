@@ -13,6 +13,8 @@ var _UpdateClient = require("./useCases/UpdateClient");
 
 var _ListClient = require("./useCases/ListClient");
 
+var _SearchClient = require("./useCases/SearchClient");
+
 const client = {
   create: async (request, response) => {
     return _CreateClient.createClientController.handle(request, response);
@@ -25,6 +27,9 @@ const client = {
   },
   list: async (request, response) => {
     return _ListClient.listClientController.handle(request, response);
+  },
+  search: async (request, response) => {
+    return _SearchClient.searchClientController.handle(request, response);
   }
 };
 exports.client = client;
