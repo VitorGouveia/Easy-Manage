@@ -123,6 +123,15 @@ export default Client
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const { "fastgas.token": token } = parseCookies(ctx)
 
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    }
+  }
+
   const { clients } = await GetClients(token)
 
   if (!clients) {

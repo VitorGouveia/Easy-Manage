@@ -6,6 +6,8 @@ import { Link } from "@components"
 import { useAuth } from "@hooks"
 
 import { HeaderContainer, Prop, Title } from "./styles"
+import { GetServerSideProps } from "next"
+import { parseCookies } from "nookies"
 
 export const Header = () => {
   const { isAuthenticated, user, clean } = useAuth()
@@ -87,4 +89,21 @@ export const Header = () => {
       </Prop>
     </HeaderContainer>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { "fastgas.token": token } = parseCookies(context)
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    }
+  }
+
+  return {
+    props: {}
+  }
 }
