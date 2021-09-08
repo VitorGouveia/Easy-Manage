@@ -10,6 +10,13 @@ class PrismaItemRepository {
     this.client = client;
   }
 
+  find = async id => {
+    return await this.client.item.findUnique({
+      where: {
+        id
+      }
+    });
+  };
   update = async (id, item) => {
     return await this.client.item.update({
       where: {
@@ -22,6 +29,13 @@ class PrismaItemRepository {
   save = async item => {
     await this.client.item.create({
       data: { ...item
+      }
+    });
+  };
+  delete = async id => {
+    await this.client.item.delete({
+      where: {
+        id
       }
     });
   };
