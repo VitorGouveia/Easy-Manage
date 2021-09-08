@@ -14,6 +14,7 @@ router.post("/user/token/refresh", accessTokenAuth, user.refreshToken)
 
 /* ITEM */
 router.post("/item", accessTokenAuth, item.create)
+router.patch("/item/:itemId", accessTokenAuth, item.update)
 
 /* CLIENT */
 router.post("/client", accessTokenAuth, client.create)

@@ -10,6 +10,15 @@ class PrismaItemRepository {
     this.client = client;
   }
 
+  update = async (id, item) => {
+    return await this.client.item.update({
+      where: {
+        id
+      },
+      data: { ...item
+      }
+    });
+  };
   save = async item => {
     await this.client.item.create({
       data: { ...item

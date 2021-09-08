@@ -24,6 +24,7 @@ router.post("/user/token/refresh", _token.accessTokenAuth, _user.user.refreshTok
 /* ITEM */
 
 router.post("/item", _token.accessTokenAuth, _item.item.create);
+router.patch("/item/:itemId", _token.accessTokenAuth, _item.item.update);
 /* CLIENT */
 
 router.post("/client", _token.accessTokenAuth, _client.client.create);
