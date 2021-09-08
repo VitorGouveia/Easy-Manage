@@ -9,6 +9,7 @@ export class Item {
   public description: string
   public price: number
   public discount: number
+  public quantity: number
 
   constructor(props: Omit<Item, "id">) {
     Object.assign(this, props)

@@ -17,13 +17,29 @@ model Item {
   description String?
   price       Int
   discount    Int?
+  quantity    Int
 
   userId String
-  user   User   @relation(fields: [userId], references: [id])
+  user   User    @relation(fields: [userId], references: [id])
+  Order  Order[]
 
   createdAt DateTime @default(now())
 
   @@map("items")
+}
+
+model Order {
+  id String @id
+
+  quantity Int
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  itemId String
+  item   Item   @relation(fields: [itemId], references: [id])
+
+  @@map("orders")
 }
 
 model Client {
@@ -56,6 +72,7 @@ model User {
   RefreshToken RefreshToken?
   Client       Client[]
   Item         Item[]
+  Order        Order[]
 
   @@map("users")
 }

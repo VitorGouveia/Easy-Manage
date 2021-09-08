@@ -5,6 +5,7 @@ import { accessTokenAuth } from "../middleware/token"
 import { user } from "@domain/user"
 import { client } from "@domain/client"
 import { item } from "@domain/item"
+import { order } from "@domain/order"
 
 export const router = Router()
 
@@ -24,4 +25,8 @@ router.get("/client", accessTokenAuth, client.list)
 router.delete("/client/:id", accessTokenAuth, client.delete)
 router.patch("/client/:id", accessTokenAuth, client.update)
 
+/* ORDER */
+router.post("/order", accessTokenAuth, order.create)
+
+/* SESSION */
 router.post("/login", user.login)

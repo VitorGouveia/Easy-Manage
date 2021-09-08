@@ -15,6 +15,8 @@ var _client = require("../../../domain/client");
 
 var _item = require("../../../domain/item");
 
+var _order = require("../../../domain/order");
+
 const router = (0, _express.Router)();
 /* USER */
 
@@ -33,4 +35,9 @@ router.get("/client/search/:query", _token.accessTokenAuth, _client.client.searc
 router.get("/client", _token.accessTokenAuth, _client.client.list);
 router.delete("/client/:id", _token.accessTokenAuth, _client.client.delete);
 router.patch("/client/:id", _token.accessTokenAuth, _client.client.update);
+/* ORDER */
+
+router.post("/order", _token.accessTokenAuth, _order.order.create);
+/* SESSION */
+
 router.post("/login", _user.user.login);

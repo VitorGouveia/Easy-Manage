@@ -33,6 +33,12 @@ Object.defineProperty(exports, "Item", {
     return _client.Item;
   }
 });
+Object.defineProperty(exports, "Order", {
+  enumerable: true,
+  get: function () {
+    return _client.Order;
+  }
+});
 exports.prisma = void 0;
 
 var _client = require("@prisma/client");

@@ -8,6 +8,7 @@ export interface CreateItemRequestDTO {
   description: string
   price: number
   discount: number
+  quantity: number
 }
 
 export interface CreateItemResponseDTO extends BaseResponse {
