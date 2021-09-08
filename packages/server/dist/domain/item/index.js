@@ -11,6 +11,8 @@ var _UpdateItem = require("./useCases/UpdateItem");
 
 var _RemoveItem = require("./useCases/RemoveItem");
 
+var _ListItem = require("./useCases/ListItem");
+
 const item = {
   create: async (request, response) => {
     return _CreateItem.createItemController.handle(request, response);
@@ -20,6 +22,9 @@ const item = {
   },
   delete: async (request, response) => {
     return _RemoveItem.removeItemController.handle(request, response);
+  },
+  list: async (request, response) => {
+    return _ListItem.listItemControler.handle(request, response);
   }
 };
 exports.item = item;

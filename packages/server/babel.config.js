@@ -19,7 +19,8 @@ module.exports = {
           "@domain": "./src/domain",
           "@user": "./src/domain/user",
           "@client": "./src/domain/client",
-          "@item": "./src/domain/item"
+          "@item": "./src/domain/item",
+          "@order": "./src/domain/order"
         }
       }
     ]

@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CreateOrderUseCase = void 0;
 
-var _entities = require("@order/entities");
+var _entities = require("../../entities");
 
 class CreateOrderUseCase {
   constructor(orderRepository, accessToken) {

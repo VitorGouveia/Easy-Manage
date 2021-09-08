@@ -11,7 +11,7 @@ var _CreateOrderController = require("./CreateOrderController");
 
 var _providers = require("../../../user/providers");
 
-var _prisma = require("@order/repositories/drivers/prisma");
+var _prisma = require("../../repositories/drivers/prisma");
 
 var _prisma2 = require("../../../../infra/prisma");
 

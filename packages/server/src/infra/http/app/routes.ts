@@ -17,6 +17,7 @@ router.post("/user/token/refresh", accessTokenAuth, user.refreshToken)
 router.post("/item", accessTokenAuth, item.create)
 router.patch("/item/:itemId", accessTokenAuth, item.update)
 router.delete("/item/:itemId", accessTokenAuth, item.delete)
+router.get("/item", accessTokenAuth, item.list)
 
 /* CLIENT */
 router.post("/client", accessTokenAuth, client.create)
