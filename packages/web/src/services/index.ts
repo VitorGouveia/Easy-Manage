@@ -1,9 +1,9 @@
-export { api } from "./api"
 export {
-  SignInRequest,
-  getUserInformation,
-  LogInRequest,
-  GetClients,
   CreateClient,
-  RemoveClient
+  RemoveClient,
+  GetClients,
+  login,
+  loginToken,
+  register
 } from "./auth"
+export { api } from "./api"

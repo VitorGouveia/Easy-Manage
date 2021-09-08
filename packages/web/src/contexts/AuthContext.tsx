@@ -2,7 +2,8 @@ import { createContext, FC, useEffect, useState } from "react"
 import { useRouter } from "next/router"
 import { setCookie, parseCookies, destroyCookie } from "nookies"
 
-import { SignInRequest, getUserInformation, LogInRequest } from "@services"
+import { register, loginToken, login } from "@services"
+import { RefreshToken } from "../types/auth"
 
 type SignInData = {
   name: string
@@ -13,12 +14,6 @@ type SignInData = {
 type LogInData = {
   email: string
   password: string
-}
-
-type RefreshToken = {
-  id: string
-  expiresIn: number
-  createdAt: string
 }
 
 type AccessToken = string
@@ -52,7 +47,7 @@ export const Auth: FC = ({ children }) => {
     const { "fastgas.token": token } = parseCookies()
 
     if (token) {
-      getUserInformation(token).then(({ user, refreshToken, accessToken }) => {
+      loginToken(token).then(({ user, refreshToken, accessToken }) => {
         setCookie(undefined, "fastgas.token", accessToken, {
           maxAge: 60 * 60 * 24 // 24 hrs
         })
@@ -77,13 +72,11 @@ export const Auth: FC = ({ children }) => {
 
   const signIn = async ({ name, email, password }: SignInData) => {
     /* call API */
-    const { data } = await SignInRequest({
+    const { user, accessToken } = await register({
       name,
       email,
       password
     })
-
-    const { accessToken, user } = data
 
     setAccessToken(accessToken)
 
@@ -97,12 +90,10 @@ export const Auth: FC = ({ children }) => {
   }
 
   const logIn = async ({ email, password }: LogInData) => {
-    const { data } = await LogInRequest({
+    const { user, accessToken, refreshToken } = await login({
       email,
       password
     })
-
-    const { accessToken, refreshToken, user } = data
 
     setAccessToken(accessToken)
     setRefreshToken(refreshToken)

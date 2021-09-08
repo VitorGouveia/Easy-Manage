@@ -9,55 +9,34 @@ import { Button, Search, TextInput } from "@heathmont/moon-components"
 
 import { ClientContainer, CardContainer, Card, NewClientForm } from "./styles"
 import { useAuth } from "@hooks"
-
-type Client = {
-  id: string
-  name: string
-  phoneNumber: string
-  city: string
-  street: string
-  houseNumber: string
-  opts: string
-}
+import { Client } from "types/auth"
 
 type ClientProps = {
   clients: Client[]
 }
 
-type ClientForm = {
-  id: string
-  name: string
-  phoneNumber: string
-  city: string
-  houseNumber: string
-  street: string
-  opts: string
-}
-
 const Client: FC<ClientProps> = ({ clients }) => {
   const { register, handleSubmit } = useForm()
-  const [clientList, setClientList] = useState<ClientForm[]>([])
+  const [clientList, setClientList] = useState<Client[]>([])
   const { accessToken, user } = useAuth()
 
-  useEffect(() => {
-    setClientList(clients)
-  }, [])
+  useEffect(() => setClientList(clients), [])
 
-  const createClient = async (data: Omit<ClientForm, "id">) => {
+  const createClient = async (data: Omit<Client, "id">) => {
     const { data: response } = await CreateClient({ ...data }, accessToken)
     setClientList([...clientList, response.client])
   }
 
   const handleRemoveClient = async (clientId: string) => {
-    await RemoveClient(clientId, user.id, accessToken)
-
     setClientList(clientList.filter(client => client.id !== clientId))
+
+    await RemoveClient(clientId, user.id, accessToken)
   }
 
   return (
     <ClientContainer>
       <div className="search">
-        <Search loadingMessage={<span>procurando clients</span>} />
+        <Search loadingMessage={<span>procurando clientes</span>} />
       </div>
 
       {clientList.length === 0 ? (
@@ -176,7 +155,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     }
   }
 
-  const { clients } = await GetClients(token)
+  const clients = await GetClients(token)
 
   if (!clients) {
     return {
