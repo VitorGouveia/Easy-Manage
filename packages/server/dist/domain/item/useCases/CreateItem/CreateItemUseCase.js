@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.CreateItemUseCase = void 0;
 
-var _entities = require("@item/entities");
+var _entities = require("../../entities");
 
 class CreateItemUseCase {
   constructor(itemRepository, accessToken) {

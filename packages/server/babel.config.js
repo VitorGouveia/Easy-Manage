@@ -18,7 +18,8 @@ module.exports = {
           "@infra": "./src/infra",
           "@domain": "./src/domain",
           "@user": "./src/domain/user",
-          "@client": "./src/domain/client"
+          "@client": "./src/domain/client",
+          "@item": "./src/domain/item"
         }
       }
     ]

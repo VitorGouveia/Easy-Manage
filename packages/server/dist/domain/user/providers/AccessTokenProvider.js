@@ -11,12 +11,8 @@ var _jsonwebtoken = require("jsonwebtoken");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 class AccessTokenProvider {
-  constructor() {
-    _defineProperty(this, "accessTokenSecret", process.env.ACCESS_TOKEN_SECRET);
-  }
+  accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
   async execute(payload) {
     const expiresIn = (0, _dayjs.default)().add(15, "minute").unix();
