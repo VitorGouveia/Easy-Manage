@@ -13,12 +13,17 @@ var _user = require("../../../domain/user");
 
 var _client = require("../../../domain/client");
 
+var _item = require("../../../domain/item");
+
 const router = (0, _express.Router)();
 /* USER */
 
 exports.router = router;
 router.post("/user", _user.user.create);
 router.post("/user/token/refresh", _token.accessTokenAuth, _user.user.refreshToken);
+/* ITEM */
+
+router.post("/item", _token.accessTokenAuth, _item.item.create);
 /* CLIENT */
 
 router.post("/client", _token.accessTokenAuth, _client.client.create);

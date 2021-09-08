@@ -4,12 +4,16 @@ import { accessTokenAuth } from "../middleware/token"
 
 import { user } from "@domain/user"
 import { client } from "@domain/client"
+import { item } from "@domain/item"
 
 export const router = Router()
 
 /* USER */
 router.post("/user", user.create)
 router.post("/user/token/refresh", accessTokenAuth, user.refreshToken)
+
+/* ITEM */
+router.post("/item", accessTokenAuth, item.create)
 
 /* CLIENT */
 router.post("/client", accessTokenAuth, client.create)

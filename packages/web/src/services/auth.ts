@@ -1,5 +1,4 @@
 import { api } from "@services"
-import { decode } from "jsonwebtoken"
 
 type RegisterRequestProps = {
   name: string

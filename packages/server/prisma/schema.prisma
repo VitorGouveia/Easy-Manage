@@ -7,14 +7,16 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]
 }
 
 model Item {
-  id    Int    @id @default(autoincrement())
-  name  String
-  price Int
+  id          String  @id
+  name        String
+  description String?
+  price       Int
+  discount    Int?
 
   userId String
   user   User   @relation(fields: [userId], references: [id])

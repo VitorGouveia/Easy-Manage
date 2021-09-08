@@ -70,6 +70,8 @@ const Client: FC<ClientProps> = ({ clients }) => {
         </CardContainer>
       ) : (
         <ul>
+          <h1>Todos os Clientes</h1>
+
           {clientList.map(client => {
             return (
               <Card key={client.id}>
