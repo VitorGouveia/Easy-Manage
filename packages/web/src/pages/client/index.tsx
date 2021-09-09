@@ -15,7 +15,7 @@ type ClientProps = {
   clients: Client[]
 }
 
-const Client: FC<ClientProps> = ({ clients }) => {
+const ClientPage: FC<ClientProps> = ({ clients }) => {
   const { register, handleSubmit } = useForm()
   const [clientList, setClientList] = useState<Client[]>([])
   const { accessToken, user } = useAuth()
@@ -23,8 +23,14 @@ const Client: FC<ClientProps> = ({ clients }) => {
   useEffect(() => setClientList(clients), [])
 
   const createClient = async (data: Omit<Client, "id">) => {
+    setClientList([
+      ...clientList,
+      {
+        id: String(new Date().getTime()),
+        ...data
+      }
+    ])
     const { data: response } = await CreateClient({ ...data }, accessToken)
-    setClientList([...clientList, response.client])
   }
 
   const handleRemoveClient = async (clientId: string) => {
@@ -141,7 +147,7 @@ const Client: FC<ClientProps> = ({ clients }) => {
   )
 }
 
-export default Client
+export default ClientPage
 
 export const getServerSideProps: GetServerSideProps = async ctx => {
   const { "fastgas.token": token } = parseCookies(ctx)
