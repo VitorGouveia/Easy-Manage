@@ -30,7 +30,8 @@ const ClientPage: FC<ClientProps> = ({ clients }) => {
         ...data
       }
     ])
-    const { data: response } = await CreateClient({ ...data }, accessToken)
+
+    await CreateClient({ ...data }, accessToken)
   }
 
   const handleRemoveClient = async (clientId: string) => {

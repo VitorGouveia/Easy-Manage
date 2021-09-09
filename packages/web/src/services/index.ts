@@ -1,7 +1,10 @@
 export {
+  GetClients,
   CreateClient,
   RemoveClient,
-  GetClients,
+  GetItems,
+  CreateItem,
+  RemoveItem,
   login,
   loginToken,
   register

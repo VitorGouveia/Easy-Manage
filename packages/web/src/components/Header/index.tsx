@@ -32,7 +32,7 @@ export const Header = () => {
               </TabLink>
             </Link>,
 
-            <Link name="login" url="/items">
+            <Link name="login" url="/item">
               <TabLink
                 href="#2"
                 className={pathname === "/items" ? "active" : ""}

@@ -21,5 +21,3 @@ const pwaPlugin = withPWA({
     ignoreDuringBuilds: true
   }
 })
-
-// module.exports = withPlugins()
