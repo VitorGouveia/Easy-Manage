@@ -10,6 +10,9 @@ var _uuid = require("uuid");
 class Item {
   constructor(props) {
     Object.assign(this, props);
+    this.quantity = Number(this.quantity);
+    this.price = Number(this.price);
+    this.discount = Number(this.discount);
     this.id = (0, _uuid.v4)();
   }
 
