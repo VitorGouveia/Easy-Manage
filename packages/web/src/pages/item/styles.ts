@@ -31,7 +31,7 @@ export const ItemContainer = styled.section`
   }
 
   ul {
-    grid-area: clients;
+    grid-area: items;
   }
 
   & > section {

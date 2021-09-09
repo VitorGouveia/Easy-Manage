@@ -8,16 +8,16 @@ export const GetItems = async (token: string): Promise<Item[]> => {
     }
   })
 
-  const { clients } = data
+  const { items } = data
 
-  return clients
+  return items
 }
 
 export const CreateItem = async (
   item: Omit<Item, "id" & "userId">,
   token: string
 ) => {
-  const { data } = await api.post(
+  await api.post(
     "/item",
     {
       ...item
@@ -28,10 +28,6 @@ export const CreateItem = async (
       }
     }
   )
-
-  return {
-    data
-  }
 }
 
 export const RemoveItem = async (

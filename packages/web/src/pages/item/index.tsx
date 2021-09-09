@@ -7,15 +7,16 @@ import { GetItems, CreateItem, RemoveItem } from "@services"
 import { FilesRemove, GenericEdit } from "@heathmont/moon-icons"
 import { Button, Search, TextInput } from "@heathmont/moon-components"
 
-import { ItemContainer, CardContainer, Card, NewItemForm } from "./itemStyles"
+import { ItemContainer, CardContainer, Card, NewItemForm } from "./styles"
 import { useAuth } from "@hooks"
 import { Item } from "types/auth"
 
 type ItemProps = {
   items: Item[]
+  notFound?: true
 }
 
-const ItemPage: FC<ItemProps> = ({ items }) => {
+const ItemPage: FC<ItemProps> = ({ items, notFound }) => {
   const { register, handleSubmit } = useForm()
   const [itemList, setItemList] = useState<Item[]>([])
   const { accessToken, user } = useAuth()
@@ -38,6 +39,14 @@ const ItemPage: FC<ItemProps> = ({ items }) => {
     setItemList(itemList.filter(item => item.id !== itemId))
 
     await RemoveItem(itemId, user.id, accessToken)
+  }
+
+  if (notFound) {
+    return (
+      <ItemContainer>
+        <h1>could not find anything sorry</h1>
+      </ItemContainer>
+    )
   }
 
   return (
@@ -126,7 +135,7 @@ const ItemPage: FC<ItemProps> = ({ items }) => {
               required
               type="text"
               label="street"
-              placeholder="disconto (geral)"
+              placeholder="disconto (geral) %"
               {...register("discount")}
             />
             <TextInput
@@ -164,7 +173,9 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   if (!items) {
     return {
-      notFound: true
+      props: {
+        notFound: true
+      }
     }
   }
 
