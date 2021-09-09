@@ -14,6 +14,10 @@ export class Item {
   constructor(props: Omit<Item, "id">) {
     Object.assign(this, props)
 
+    this.quantity = Number(this.quantity)
+    this.price = Number(this.price)
+    this.discount = Number(this.discount)
+
     this.id = uuid()
   }
 }
