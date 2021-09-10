@@ -144,10 +144,11 @@ export const Hero = styled.div`
 
 export const FormBox = styled.section`
   width: 80%;
+  max-width: 800px;
   padding: 1rem;
 
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
+  display: flex;
+  flex-direction: column;
 
   justify-content: space-between;
 
@@ -165,6 +166,7 @@ export const FormBox = styled.section`
 `
 
 export const Form = styled.form`
+  margin-top: 2rem;
   padding: 1rem;
   position: relative;
 
@@ -185,21 +187,74 @@ export const Form = styled.form`
     content: "";
 
     position: absolute;
-    --border-spacing: -1px;
+    --border-spacing: -4px;
     border-radius: 1rem;
     top: var(--border-spacing);
     left: var(--border-spacing);
     right: var(--border-spacing);
     bottom: var(--border-spacing);
 
-    border: 3px solid #dcdce6;
+    border: 1.5px solid #dcdce6;
   }
 
   button {
+    margin-top: 2rem;
     background: var(--accent);
 
     &:hover {
       background: var(--accent-hover);
+    }
+  }
+`
+
+export const Footer = styled.footer`
+  background: #000;
+
+  padding: 3rem 1rem;
+
+  width: 100%;
+  display: grid;
+  grid-template-areas: "logo products cases";
+  grid-template-columns: 1fr 1fr 1fr;
+
+  img {
+    position: relative;
+    max-width: 50px;
+  }
+`
+
+export const FooterTitle = styled.h4`
+  font-weight: 300;
+  color: #707070;
+`
+
+export const FooterList = styled.ul`
+  margin-top: 1rem;
+
+  display: flex;
+  flex-direction: column;
+
+  list-style: none;
+
+  a:hover,
+  a:focus {
+    transition: all 200ms;
+    color: var(--accent);
+
+    img {
+      &::before {
+        content: "";
+
+        position: absolute;
+        --border-spacing: -4px;
+        border-radius: 1rem;
+        top: var(--border-spacing);
+        left: var(--border-spacing);
+        right: var(--border-spacing);
+        bottom: var(--border-spacing);
+
+        border: 1.5px solid #dcdce6;
+      }
     }
   }
 `

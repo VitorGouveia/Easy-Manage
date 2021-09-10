@@ -1,7 +1,6 @@
-import ScrollAnimation from "react-animate-on-scroll"
 import Typewriter from "typewriter-effect"
 
-import { Button } from "@components"
+import { Button, Link } from "@components"
 import {
   HomeContainer,
   TitleBox,
@@ -10,7 +9,10 @@ import {
   Hero,
   Spec,
   FormBox,
-  Form
+  Form,
+  Footer,
+  FooterList,
+  FooterTitle
 } from "./styles"
 
 const Home = () => {
@@ -85,10 +87,10 @@ const Home = () => {
       </FeaturesBox>
 
       <FormBox>
-        <span>
+        <div>
           <h2>Faça a escolha certa</h2>
           <p>Venha descobrir a nossa plataforma</p>
-        </span>
+        </div>
 
         <Form>
           <input type="text" placeholder="Nome" />
@@ -100,6 +102,45 @@ const Home = () => {
           </Button>
         </Form>
       </FormBox>
+      <Footer>
+        <section data-id="1">
+          <a href="/">
+            <img src="/logo.png" />
+          </a>
+        </section>
+
+        <section data-id="2">
+          <FooterTitle>Produtos</FooterTitle>
+          <FooterList>
+            <li>
+              <Link name="client" url="/client">
+                Clientes
+              </Link>
+            </li>
+            <li>
+              <Link name="item" url="/item">
+                Itens
+              </Link>
+            </li>
+          </FooterList>
+        </section>
+
+        <section data-id="3">
+          <FooterTitle>Use Cases</FooterTitle>
+          <FooterList>
+            <li>
+              <Link name="client" url="/client">
+                Criação de Clientes
+              </Link>
+            </li>
+            <li>
+              <Link name="item" url="/item">
+                Criação de Itens
+              </Link>
+            </li>
+          </FooterList>
+        </section>
+      </Footer>
     </HomeContainer>
   )
 }
