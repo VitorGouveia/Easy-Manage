@@ -1,131 +1,130 @@
 import styled, { css } from "styled-components"
 
+export const paragraph = css`
+  max-height: 24px;
+  width: auto;
+
+  display: flex;
+  align-items: center;
+
+  font-weight: 700;
+
+  transition: all var(--short-ms);
+`
+
 export const HeaderContainer = styled.header`
   position: fixed;
 
   width: 100%;
-  height: 90px;
-  --header-height: 90px;
 
-  padding: 1rem 3rem;
+  padding: 1.2rem;
 
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-
-  align-items: center;
   place-items: center;
+  grid-template-areas: "logo tabs user";
+
+  grid-template-columns: 1fr 2fr 1fr;
 
   background: #171619;
-
   border-bottom: 2px solid #323232;
+  --header-height: 60px;
+`
+
+export const Logo = styled.a`
+  display: flex;
+  padding: 0.4rem;
+  border-radius: 0.3rem;
+  transition: all 200ms;
+
+  &:hover,
+  &:focus {
+    background: #525252;
+  }
 
   img {
     width: 24px;
+    height: 24px;
+  }
+
+  p {
+    margin-left: 0.2rem;
+
+    padding: 0.4rem;
+    border-radius: 0.3rem;
+    font-size: clamp(0.5rem, -0.3rem + 1.6013vw, 1rem);
+
+    ${paragraph}
   }
 `
 
-interface PropProps {
-  isLogo?: boolean
-  isTabs?: boolean
-  isUser?: boolean
-}
+export const Navbar = styled.ul`
+  list-style: none;
 
-export const Prop = styled.section<PropProps>`
   display: flex;
-  padding: 0.2rem;
-  align-items: center;
-  color: ${props => props.theme.color.bulma[100]};
-
-  /* Remove the skip to content */
-  nav {
-    & > a {
-      display: none;
-    }
-  }
-
-  a {
-    &::after {
-      background-color: ${props => props.theme.color.dodoria[100]};
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-
-    h1 {
-      background: #323232;
-    }
-  }
-
-  button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: normal;
-    border-radius: 0.2rem;
-    height: auto;
-    font-size: 0.6rem;
-    padding: 0 0.4rem;
-
-    &:first-of-type {
-      background: ${props => props.theme.color.dodoria[100]};
-
-      &:hover {
-        background: ${props => props.theme.color.dodoria[10]};
-      }
-    }
-
-    div {
-      width: 100%;
-    }
-  }
-
-  ${props =>
-    props.isTabs &&
-    css`
-      width: auto;
-      align-self: flex-end;
-    `}
-
-  ${props =>
-    props.isUser &&
-    css`
-      height: 24px;
-      width: 100%;
-      margin-left: 1rem;
-      padding-left: 1rem;
-      justify-content: space-between;
-      border-left: 1px solid #323232;
-
-      div {
-        width: 24px;
-        height: 24px;
-        border-radius: 0;
-      }
-    `}
-    ${props =>
-    props.isLogo &&
-    css`
-      width: auto;
-      justify-content: space-between;
-      height: 24px;
-      margin-right: 1rem;
-      padding-right: 1rem;
-      border-right: 1px solid #323232;
-    `}
 `
 
-export const Title = styled.h1`
-  font-size: clamp(0.5rem, -0.3rem + 1.6013vw, 2rem);
-  font-weight: bold;
-  padding: 0.3rem;
-  border-radius: 0.3rem;
-  margin-left: 0.2rem;
+export const NavbarItem = styled.li`
+  font-size: 1rem;
 
-  transition: background 200ms;
+  &:nth-child(even) {
+    margin: 0 1rem;
+  }
 
-  &:hover {
+  a:hover,
+  a:focus {
+    p {
+      position: relative;
+      ${paragraph}
+      color: #fff;
+
+      &::after {
+        position: absolute;
+        content: "";
+
+        /* left: 50%;
+        bottom: -10px; */
+        top: 130%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        width: 30px;
+        height: 3px;
+        background: orangered;
+        border-radius: 2px;
+      }
+    }
+  }
+`
+
+export const User = styled.section`
+  display: flex;
+  align-items: center;
+
+  color: var(--accent);
+`
+
+export const Avatar = styled.div`
+  padding: 0.6rem;
+
+  display: flex;
+  align-items: center;
+
+  transition: all var(--short-ms);
+
+  &:hover,
+  &:focus {
     cursor: pointer;
-    background: ${props => props.theme.color.trunks[100]};
+    background: #525252;
+  }
+
+  img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  span {
+    margin-left: 0.4rem;
+    color: var(--white);
   }
 `

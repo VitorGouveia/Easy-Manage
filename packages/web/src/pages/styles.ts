@@ -1,7 +1,6 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-  background: ${props => props.theme.color.popo[100]};
   width: 100%;
   height: 100%;
 
@@ -11,7 +10,29 @@ export const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  & > section {
-    padding-top: var(--header-height);
-  }
+  padding-top: var(--header-height);
 `
+
+export const Header = styled.header`
+  display: grid;
+  grid-template-areas: "logo navbar navbar";
+
+  grid-template-columns: 100px auto;
+  grid-template-rows: 90px;
+`
+
+export const Logo = styled.a`
+  grid-area: logo;
+`
+
+export const Navbar = styled.nav`
+  grid-area: navbar;
+`
+
+export const NavList = styled.ul`
+  list-style: none;
+
+  display: flex;
+`
+
+export const ListItem = styled.li``

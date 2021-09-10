@@ -13,6 +13,21 @@ export const GetClients = async (token: string): Promise<Client[]> => {
   return clients
 }
 
+export const SearchClients = async (
+  query: string,
+  token: string
+): Promise<Client[]> => {
+  const { data } = await api.get(`/client/search/?query=${query}`, {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  })
+
+  const { clients } = data
+
+  return clients
+}
+
 export const CreateClient = async (
   client: Omit<Client, "id">,
   token: string

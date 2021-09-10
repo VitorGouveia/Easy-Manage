@@ -7,6 +7,7 @@ export {
   RemoveItem,
   login,
   loginToken,
-  register
+  register,
+  SearchClients
 } from "./auth"
 export { api } from "./api"

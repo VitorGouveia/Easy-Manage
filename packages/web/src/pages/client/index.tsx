@@ -3,7 +3,12 @@ import { GetServerSideProps } from "next"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
 
-import { GetClients, CreateClient, RemoveClient } from "@services"
+import {
+  GetClients,
+  CreateClient,
+  RemoveClient,
+  SearchClients
+} from "@services"
 import { FilesRemove, GenericEdit } from "@heathmont/moon-icons"
 import { Button, Search, TextInput } from "@heathmont/moon-components"
 
@@ -18,6 +23,7 @@ type ClientProps = {
 const ClientPage: FC<ClientProps> = ({ clients }) => {
   const { register, handleSubmit } = useForm()
   const [clientList, setClientList] = useState<Client[]>([])
+  const [clientSearchList, setClientSearchList] = useState<Client[]>([])
   const { accessToken, user } = useAuth()
 
   useEffect(() => setClientList(clients), [])
@@ -34,6 +40,11 @@ const ClientPage: FC<ClientProps> = ({ clients }) => {
     await CreateClient({ ...data }, accessToken)
   }
 
+  const searchClients = async (query: string) => {
+    const clients = await SearchClients(query, accessToken)
+    setClientSearchList(clients)
+  }
+
   const handleRemoveClient = async (clientId: string) => {
     setClientList(clientList.filter(client => client.id !== clientId))
 
@@ -43,7 +54,30 @@ const ClientPage: FC<ClientProps> = ({ clients }) => {
   return (
     <ClientContainer>
       <div className="search">
-        <Search loadingMessage={<span>procurando clientes</span>} />
+        <Search
+          onChange={event => searchClients(event.target.value)}
+          results={[
+            {
+              title: <span>clientes</span>,
+              items: [
+                <>
+                  {clientSearchList.map(client => {
+                    return <span>{client.name}</span>
+                  })}
+                </>
+              ]
+            }
+          ]}
+          loadingMessage={
+            <CardContainer>
+              <h1>Todos os Clientes</h1>
+
+              <Card full={true}>
+                <h5>No clients yet.</h5>
+              </Card>
+            </CardContainer>
+          }
+        />
       </div>
 
       {clientList.length === 0 ? (
@@ -139,7 +173,7 @@ const ClientPage: FC<ClientProps> = ({ clients }) => {
             />
           </div>
 
-          <Button fullWidth variant="primary">
+          <Button fullWidth variant="tertiary">
             Criar Cliente
           </Button>
         </NewClientForm>

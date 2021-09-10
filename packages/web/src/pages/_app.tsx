@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { AppProps } from "next/app"
-import { ThemeProvider, bitcasinoDark } from "@heathmont/moon-themes"
 
 import { SEO } from "../document"
 import { Header } from "@components"
@@ -13,12 +12,10 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Auth>
       <SEO />
-      <ThemeProvider theme={bitcasinoDark}>
-        <Container style={{ WebkitTapHighlightColor: "transparent" }}>
-          <Header />
-          <Component {...pageProps} />
-        </Container>
-      </ThemeProvider>
+      <Header />
+      <Container style={{ WebkitTapHighlightColor: "transparent" }}>
+        <Component {...pageProps} />
+      </Container>
     </Auth>
   )
 }
