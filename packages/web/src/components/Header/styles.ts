@@ -13,6 +13,7 @@ export const paragraph = css`
 `
 
 export const HeaderContainer = styled.header`
+  z-index: 10;
   position: fixed;
 
   width: 100%;
