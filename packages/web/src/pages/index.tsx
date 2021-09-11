@@ -65,7 +65,7 @@ const Home = () => {
           </Hero>
         </Feature>
 
-        <Feature>
+        <Feature hasLeftImg>
           <Hero>
             <img
               src="https://www.trisearch.com.au/wp-content/uploads/2020/07/Depositphotos_151249562_m-2015.jpg"

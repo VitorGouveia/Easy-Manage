@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const Container = styled.div`
   width: 100%;
@@ -26,6 +26,12 @@ export const Container = styled.div`
       opacity: 1;
     }
   }
+
+  @media (max-width: 300px) {
+    article {
+      width: 95%;
+    }
+  }
 `
 
 export const HomeContainer = styled.main`
@@ -40,6 +46,10 @@ export const HomeContainer = styled.main`
 
   align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 375px) {
+    gap: 3rem;
+  }
 `
 
 export const TitleBox = styled.article`
@@ -57,7 +67,7 @@ export const TitleBox = styled.article`
     color: #fff;
     text-shadow: 1px 1px black;
     font-size: 72px;
-    font-size: clamp(1.1rem, 1rem + 3.2558vw, 4.5rem);
+    font-size: clamp(1.2rem, 1rem + 3.2558vw, 4.5rem);
 
     strong {
       color: var(--accent);
@@ -108,24 +118,57 @@ export const FeaturesBox = styled.section`
   display: flex;
   flex-direction: column;
   row-gap: 2rem;
+
+  @media (max-width: 600px) {
+    padding: 0;
+  }
 `
 
-export const Feature = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  place-items: center;
+interface FeatureProps {
+  hasLeftImg?: boolean
+}
+
+export const Feature = styled.div<FeatureProps>`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  @media (max-width: 530px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    article {
+      margin-bottom: 1rem;
+    }
+
+    ${props =>
+      props.hasLeftImg &&
+      css`
+        flex-direction: column-reverse;
+      `}
+  }
 
   padding: 2rem;
+
+  @media (max-width: 280px) {
+    padding: 0;
+
+    & > article {
+      padding: 0;
+    }
+  }
 `
 
 export const Spec = styled.article`
-  padding: 4rem;
+  /* padding: 4rem; */
+  padding: clamp(1rem, 2vmax, 10rem);
 
   display: flex;
   flex-direction: column;
 
   summary {
-    font-size: 32px;
+    font-size: clamp(1rem, 1rem + 0.904vw, 3rem);
     color: #fff;
     font-weight: 700;
   }
@@ -137,8 +180,13 @@ export const Spec = styled.article`
 `
 
 export const Hero = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   img {
-    height: 300px;
+    height: auto;
+    width: 70%;
   }
 `
 
@@ -154,14 +202,16 @@ export const FormBox = styled.section`
 
   background: var(--black);
 
+  text-align: center;
+
   h2 {
     color: #ddd;
-    font-size: clamp(1.1rem, 0.5rem + 3.2558vw, 3rem);
+    font-size: clamp(0.6rem, 1.3rem + 0.904vw, 3rem);
   }
 
   p {
     margin-top: 1rem;
-    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
+    font-size: clamp(0.6rem, 1.0233vw, 1.5rem);
   }
 `
 
@@ -170,12 +220,8 @@ export const Form = styled.form`
   padding: 1rem;
   position: relative;
 
-  display: grid;
-  grid-template-areas:
-    "input"
-    "input"
-    "input"
-    "button";
+  display: flex;
+  flex-direction: column;
 
   row-gap: 0.8rem;
 
