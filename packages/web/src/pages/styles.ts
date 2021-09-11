@@ -12,7 +12,7 @@ export const Container = styled.div`
 
   padding-top: var(--header-height);
 
-  * {
+  *:not(img) {
     animation: fadeIn 1s;
   }
 
@@ -64,6 +64,7 @@ export const TitleBox = styled.article`
   text-align: center;
 
   h1 {
+    font-family: "Sora";
     color: #fff;
     text-shadow: 1px 1px black;
     font-size: 72px;

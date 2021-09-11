@@ -42,9 +42,11 @@ const Home = () => {
         </h1>
         <p>Uma plaforma para controle de inventário e estoque para empresas.</p>
 
-        <Button name="register" url="/register">
-          Crie sua conta
-        </Button>
+        <Link url="/register" name="register">
+          <Button name="register" url="/register">
+            Crie sua conta
+          </Button>
+        </Link>
       </TitleBox>
 
       <FeaturesBox>
