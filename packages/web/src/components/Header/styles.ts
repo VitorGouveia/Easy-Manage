@@ -33,6 +33,7 @@ export const HeaderContainer = styled.header`
 
 export const Logo = styled.a`
   display: flex;
+  align-items: center;
   padding: 0.4rem;
   border-radius: 0.3rem;
   transition: all 200ms;
@@ -43,8 +44,8 @@ export const Logo = styled.a`
   }
 
   img {
-    width: 24px;
-    height: 24px;
+    width: clamp(18px, 2vmax, 24px);
+    height: auto;
   }
 
   p {
@@ -56,6 +57,12 @@ export const Logo = styled.a`
 
     ${paragraph}
   }
+
+  @media (max-width: 425px) {
+    p {
+      display: none;
+    }
+  }
 `
 
 export const Navbar = styled.ul`
@@ -65,8 +72,8 @@ export const Navbar = styled.ul`
 `
 
 export const NavbarItem = styled.li`
-  font-size: 1rem;
   p {
+    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
     padding: 0.2rem;
     background: linear-gradient(180deg, red, orangered) repeat-x 0 100%;
     background-size: 0.125rem 0.125rem;
@@ -76,6 +83,8 @@ export const NavbarItem = styled.li`
   &:nth-child(even) {
     margin: 0 1rem;
   }
+
+  /* @media (max-width: ) */
 
   a:hover,
   a:focus {
@@ -108,13 +117,13 @@ export const Avatar = styled.div`
   }
 
   img {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+    width: clamp(18px, 2vmax, 24px);
+    height: auto;
   }
 
   span {
     margin-left: 0.4rem;
     color: var(--white);
+    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
   }
 `
