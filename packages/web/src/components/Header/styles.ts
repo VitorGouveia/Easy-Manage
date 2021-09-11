@@ -9,7 +9,7 @@ export const paragraph = css`
 
   font-weight: 700;
 
-  transition: all var(--short-ms);
+  transition: all calc(var(--short-ms) * 2);
 `
 
 export const HeaderContainer = styled.header`
@@ -66,6 +66,12 @@ export const Navbar = styled.ul`
 
 export const NavbarItem = styled.li`
   font-size: 1rem;
+  p {
+    padding: 0.2rem;
+    background: linear-gradient(180deg, red, orangered) repeat-x 0 100%;
+    background-size: 0.125rem 0.125rem;
+    transition: all calc(var(--short-ms) * 2);
+  }
 
   &:nth-child(even) {
     margin: 0 1rem;
@@ -74,25 +80,8 @@ export const NavbarItem = styled.li`
   a:hover,
   a:focus {
     p {
-      position: relative;
-      ${paragraph}
       color: #fff;
-
-      &::after {
-        position: absolute;
-        content: "";
-
-        /* left: 50%;
-        bottom: -10px; */
-        top: 130%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-
-        width: 30px;
-        height: 3px;
-        background: orangered;
-        border-radius: 2px;
-      }
+      background-size: 0.125rem 3.125rem;
     }
   }
 `
