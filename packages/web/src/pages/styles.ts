@@ -244,19 +244,6 @@ export const Form = styled.form`
     z-index: 2;
   }
 
-  input {
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:active,
-    &:-webkit-autofill:focus {
-      caret-color: var(--accent);
-      background-color: var(--input) !important;
-      color: var(--white) !important;
-      -webkit-box-shadow: 0 0 0 1000px var(--input) inset !important;
-      -webkit-text-fill-color: var(--white) !important;
-    }
-  }
-
   span {
     font-size: 11px;
     color: red;

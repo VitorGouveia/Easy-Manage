@@ -48,8 +48,6 @@ const Home = () => {
       const APIError = axiosError.response.data.error
 
       if (APIError === "User with that e-mail already exists.") {
-        console.log("sa")
-
         setError(
           "email",
           {

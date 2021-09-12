@@ -1,7 +1,22 @@
-// import { FC, useEffect, useState } from "react"
-// import { GetServerSideProps } from "next"
-// import { parseCookies } from "nookies"
-// import { useForm } from "react-hook-form"
+import { GetServerSideProps } from "next"
+import { FC, useEffect, useState } from "react"
+import { parseCookies } from "nookies"
+import { useForm } from "react-hook-form"
+import { Trash } from "react-feather"
+
+import { GetClients } from "@services"
+import { Button } from "@components"
+import { Client } from "types/auth"
+
+import {
+  Layout,
+  NewEntity,
+  Card,
+  CardContent,
+  CardTitle,
+  NotFoundCard
+} from "@styles/basePage"
+import {} from "./styles"
 
 // import {
 //   GetClients,
@@ -14,12 +29,134 @@
 
 // import { ClientContainer, CardContainer, Card, NewClientForm } from "./styles"
 // import { useAuth } from "@hooks"
-// import { Client } from "types/auth"
 
-// type ClientProps = {
-//   clients: Client[]
-// }
+type ClientPageProps = {
+  clients: Client[]
+  notFound: true
+}
 
+const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
+  const { register, handleSubmit } = useForm()
+  const [clientList, setClientList] = useState<Client[]>([])
+
+  useEffect(() => setClientList(clientList), [])
+
+  const handleClientRegister = async (client: Omit<Client, "id">) => {
+    setClientList([
+      ...clientList,
+      {
+        id: new Date().getTime().toString(),
+        ...client
+      }
+    ])
+  }
+
+  const handleRemoveClient = async (id: string) => {
+    setClientList(clientList.filter(client => client.id !== id))
+  }
+
+  return (
+    <Layout>
+      <div className="search">
+        <input type="search" />
+      </div>
+
+      <section>
+        <NewEntity onSubmit={handleSubmit(handleClientRegister)}>
+          <div>
+            <input
+              required
+              type="text"
+              placeholder="Nome"
+              {...register("name", {
+                required: "Você precisa colocar um nome pro seu cliente"
+              })}
+            />
+            <input
+              required
+              type="tel"
+              placeholder="Número de telefone"
+              {...register("phoneNumber")}
+            />
+            <input
+              required
+              type="text"
+              placeholder="Cidade"
+              {...register("city")}
+            />
+            <input
+              required
+              type="text"
+              placeholder="Rua"
+              {...register("street")}
+            />
+            <input
+              required
+              type="text"
+              placeholder="Número da casa"
+              {...register("houseNumber")}
+            />
+            <input
+              required
+              type="text"
+              placeholder="Opcional"
+              {...register("opts")}
+            />
+          </div>
+
+          <Button>Criar Cliente</Button>
+        </NewEntity>
+      </section>
+
+      <ul>
+        {clientList.length <= 0 ? (
+          <NotFoundCard>
+            Não consegui achar nenhum cliente.
+            <br />
+            Tenta criar um.
+          </NotFoundCard>
+        ) : (
+          <>
+            {clientList.map(client => {
+              return (
+                <Card key={client.id}>
+                  <CardTitle>
+                    <h4>Informações</h4>
+                  </CardTitle>
+
+                  <CardContent>
+                    <img
+                      src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
+                      alt=""
+                    />
+                    <h6>{client.name}</h6>
+                    <p>{client.phoneNumber}</p>
+                    <small>{client.opts}</small>
+                  </CardContent>
+
+                  <CardTitle>
+                    <h4>Endereço</h4>
+                  </CardTitle>
+                  <CardContent type="outlined">
+                    <h6>{client.city}</h6>
+                    <p>{client.street}</p>
+                    <small>{client.phoneNumber}</small>
+                  </CardContent>
+
+                  <Trash
+                    onClick={() => handleRemoveClient(client.id)}
+                    size={16}
+                    color="#fff"
+                  />
+                </Card>
+              )
+            })}
+          </>
+        )}
+      </ul>
+    </Layout>
+  )
+}
 // const ClientPage: FC<ClientProps> = ({ clients }) => {
 //   const { register, handleSubmit } = useForm()
 //   const [clientList, setClientList] = useState<Client[]>([])
@@ -182,38 +319,33 @@
 //   )
 // }
 
-// export default ClientPage
+export default ClientPage
 
-// export const getServerSideProps: GetServerSideProps = async ctx => {
-//   const { "fastgas.token": token } = parseCookies(ctx)
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const { "fastgas.token": token } = parseCookies(ctx)
 
-//   if (!token) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//         permanent: false
-//       }
-//     }
-//   }
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    }
+  }
 
-//   const clients = await GetClients(token)
+  const clients = await GetClients(token)
 
-//   if (!clients) {
-//     return {
-//       notFound: true
-//     }
-//   }
+  if (!!clients === false) {
+    return {
+      props: {
+        notFound: true
+      }
+    }
+  }
 
-//   return {
-//     props: {
-//       clients
-//     }
-//   }
-// }
-export default function a() {
-  return (
-    <span>
-      <h1>dwdwa</h1>
-    </span>
-  )
+  return {
+    props: {
+      notFound: true
+    }
+  }
 }
