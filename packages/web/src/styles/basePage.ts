@@ -12,18 +12,41 @@ export const Layout = styled.section`
     "content content entity";
 
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 100px auto;
+  grid-template-rows: 100px;
 
   padding: 1rem 2rem;
   margin-top: 1rem;
 
   overflow: hidden;
+
+  @media (max-width: 475px) {
+    grid-template-areas: 
+      "search"
+      "entity"
+      "content"
+    ;
+
+    overflow: auto;
+
+    & > section form {
+      padding: 0;
+    }
+
+    ul {
+      margin-top: 4rem;
+    }
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px auto;
+  }
+
   input {
     width: 100%;
     background: var(--input);
   }
 
   .search {
+    width: 100%;
     grid-area: search;
   }
 
@@ -40,7 +63,10 @@ export const Layout = styled.section`
     align-content: flex-start;
 
     list-style: none;
-    overflow-y: auto;
+
+    @media (min-width: 475px) {
+      overflow-y: auto;
+    }
 
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -61,7 +87,7 @@ export const Layout = styled.section`
 export const NewEntity = styled.form`
   width: 100%;
   height: 100%;
-  padding: 0 1rem;
+  padding-left: 1rem;
 
   display: flex;
   flex-direction: column;

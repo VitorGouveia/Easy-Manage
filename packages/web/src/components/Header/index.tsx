@@ -51,7 +51,7 @@ export const Header = () => {
               </NavbarItem>
             )
           })}
-        </Navbar>
+          </Navbar>
       </nav>
 
       <User>

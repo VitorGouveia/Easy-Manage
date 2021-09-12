@@ -38,6 +38,7 @@ type ClientPageProps = {
 const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   const { register, handleSubmit } = useForm()
   const [clientList, setClientList] = useState<Client[]>([])
+  const [searchClientList, setSearchClientList] = useState<Client[]>([])
 
   useEffect(() => setClientList(clientList), [])
 
@@ -55,10 +56,21 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
     setClientList(clientList.filter(client => client.id !== id))
   }
 
+  const handleSearch = async (query: string) => {
+    const searchResult = clientList.filter(
+      client => client.name.includes(query) === true
+    )
+
+    setSearchClientList([...searchResult])
+  }
+
   return (
     <Layout>
       <div className="search">
-        <input type="search" />
+        <input
+          type="search"
+          onChange={event => handleSearch(event.target.value)}
+        />
       </div>
 
       <section>
@@ -117,40 +129,81 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
           </NotFoundCard>
         ) : (
           <>
-            {clientList.map(client => {
-              return (
-                <Card key={client.id}>
-                  <CardTitle>
-                    <h4>Informações</h4>
-                  </CardTitle>
+            {searchClientList.length > 0 ? (
+              <>
+                {searchClientList.map(client => {
+                  return (
+                    <Card key={client.id}>
+                      <CardTitle>
+                        <h4>Informações</h4>
+                      </CardTitle>
 
-                  <CardContent>
-                    <img
-                      src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
-                      alt=""
-                    />
-                    <h6>{client.name}</h6>
-                    <p>{client.phoneNumber}</p>
-                    <small>{client.opts}</small>
-                  </CardContent>
+                      <CardContent>
+                        <img
+                          src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
+                          alt=""
+                        />
+                        <h6>{client.name}</h6>
+                        <p>{client.phoneNumber}</p>
+                        <small>{client.opts}</small>
+                      </CardContent>
 
-                  <CardTitle>
-                    <h4>Endereço</h4>
-                  </CardTitle>
-                  <CardContent type="outlined">
-                    <h6>{client.city}</h6>
-                    <p>{client.street}</p>
-                    <small>{client.phoneNumber}</small>
-                  </CardContent>
+                      <CardTitle>
+                        <h4>Endereço</h4>
+                      </CardTitle>
+                      <CardContent type="outlined">
+                        <h6>{client.city}</h6>
+                        <p>{client.street}</p>
+                        <small>{client.phoneNumber}</small>
+                      </CardContent>
 
-                  <Trash
-                    onClick={() => handleRemoveClient(client.id)}
-                    size={16}
-                    color="#fff"
-                  />
-                </Card>
-              )
-            })}
+                      <Trash
+                        onClick={() => handleRemoveClient(client.id)}
+                        size={16}
+                        color="#fff"
+                      />
+                    </Card>
+                  )
+                })}
+              </>
+            ) : (
+              <>
+                {clientList.map(client => {
+                  return (
+                    <Card key={client.id}>
+                      <CardTitle>
+                        <h4>Informações</h4>
+                      </CardTitle>
+
+                      <CardContent>
+                        <img
+                          src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
+                          alt=""
+                        />
+                        <h6>{client.name}</h6>
+                        <p>{client.phoneNumber}</p>
+                        <small>{client.opts}</small>
+                      </CardContent>
+
+                      <CardTitle>
+                        <h4>Endereço</h4>
+                      </CardTitle>
+                      <CardContent type="outlined">
+                        <h6>{client.city}</h6>
+                        <p>{client.street}</p>
+                        <small>{client.phoneNumber}</small>
+                      </CardContent>
+
+                      <Trash
+                        onClick={() => handleRemoveClient(client.id)}
+                        size={16}
+                        color="#fff"
+                      />
+                    </Card>
+                  )
+                })}
+              </>
+            )}
           </>
         )}
       </ul>
