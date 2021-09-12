@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next"
+import { useRouter } from "next/router"
 import { parseCookies } from "nookies"
 
 import { Link, Button } from "@components"
@@ -14,7 +15,23 @@ import {
 } from "./styles"
 
 export const Header = () => {
-  const { isAuthenticated, user, clean } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const { pathname } = useRouter()
+
+  const pages = [
+    {
+      path: "/client",
+      name: "Clientes"
+    },
+    {
+      path: "/item",
+      name: "Itens"
+    },
+    {
+      path: "/history",
+      name: "Histórico"
+    }
+  ]
 
   return (
     <HeaderContainer>
@@ -25,21 +42,15 @@ export const Header = () => {
 
       <nav>
         <Navbar>
-          <NavbarItem>
-            <Link name="clientes" url="/client">
-              <p>Clientes</p>
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link name="itens" url="/item">
-              <p>Itens</p>
-            </Link>
-          </NavbarItem>
-          <NavbarItem>
-            <Link name="histórico" url="/history">
-              <p>Histórico</p>
-            </Link>
-          </NavbarItem>
+          {pages.map(({ name, path }) => {
+            return (
+              <NavbarItem key={name} active={pathname === path}>
+                <Link name={name} url={path}>
+                  <p>{name}</p>
+                </Link>
+              </NavbarItem>
+            )
+          })}
         </Navbar>
       </nav>
 
@@ -58,12 +69,8 @@ export const Header = () => {
           </Avatar>
         ) : (
           <>
-            <Button url="/" name="">
-              login
-            </Button>
-            <Button url="/" name="">
-              registre-se
-            </Button>
+            <Button>login</Button>
+            <Button>registre-se</Button>
           </>
         )}
       </User>

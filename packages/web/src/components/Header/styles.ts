@@ -71,7 +71,11 @@ export const Navbar = styled.ul`
   display: flex;
 `
 
-export const NavbarItem = styled.li`
+interface NavbarItemProps {
+  active: boolean
+}
+
+export const NavbarItem = styled.li<NavbarItemProps>`
   p {
     font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
     padding: 0.2rem;
@@ -84,7 +88,14 @@ export const NavbarItem = styled.li`
     margin: 0 1rem;
   }
 
-  /* @media (max-width: ) */
+  ${props =>
+    props.active &&
+    css`
+      p {
+        color: #fff;
+        background-size: 0.125rem 3.125rem;
+      }
+    `}
 
   a:hover,
   a:focus {
