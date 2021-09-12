@@ -2,11 +2,8 @@ import { ButtonHTMLAttributes, FC } from "react"
 
 import { ButtonContainer } from "./styles"
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  url: string
-  name: string
-}
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
-export const Button: FC<ButtonProps> = ({ children, url, name }) => {
+export const Button: FC<ButtonProps> = ({ children }) => {
   return <ButtonContainer>{children}</ButtonContainer>
 }

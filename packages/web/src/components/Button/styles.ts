@@ -5,8 +5,10 @@ export const ButtonContainer = styled.button`
   border: 0;
   color: #fff;
 
-  padding: 1.2rem 3.125rem;
-  border-radius: 0.6rem;
+  font-size: clamp(0.6rem, 1vw, 1.2rem);
+  font-weight: bold;
+  padding: clamp(1rem, 1.4vmax, 1.8rem) 3.125rem;
+  border-radius: clamp(3px, 0.3rem, 12px);
 
   background: gray;
   color: var(--white);

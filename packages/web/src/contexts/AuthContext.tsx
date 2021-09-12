@@ -65,9 +65,9 @@ export const Auth: FC = ({ children }) => {
 
         push("/")
       })
+    } else {
+      push("/login")
     }
-
-    push("/login")
   }, [])
 
   const signIn = async ({ name, email, password }: SignInData) => {
@@ -86,7 +86,7 @@ export const Auth: FC = ({ children }) => {
 
     setUser(user)
 
-    push("/")
+    push("/dash")
   }
 
   const logIn = async ({ email, password }: LogInData) => {

@@ -66,7 +66,6 @@ export const TitleBox = styled.article`
   h1 {
     font-family: "Sora";
     color: #fff;
-    text-shadow: 1px 1px black;
     font-size: 72px;
     font-size: clamp(1.2rem, 1rem + 3.2558vw, 4.5rem);
 
@@ -102,9 +101,13 @@ export const TitleBox = styled.article`
   }
 
   @media (max-width: 375px) {
-    button {
+    a {
       width: 100%;
-      font-size: 0.8rem;
+
+      button {
+        width: 100%;
+        font-size: 0.8rem;
+      }
     }
   }
 `
@@ -123,6 +126,10 @@ export const FeaturesBox = styled.section`
   @media (max-width: 600px) {
     padding: 0;
   }
+
+  @media (max-width: 530px) {
+    row-gap: 4rem;
+  }
 `
 
 interface FeatureProps {
@@ -134,13 +141,22 @@ export const Feature = styled.div<FeatureProps>`
   justify-content: space-around;
   align-items: center;
 
+  padding: 2rem;
+
   @media (max-width: 530px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
+    padding: 2rem clamp(2rem, 1vmax, 3rem);
+
     article {
+      padding: 0;
       margin-bottom: 1rem;
+    }
+
+    img {
+      width: 100% !important;
     }
 
     ${props =>
@@ -149,8 +165,6 @@ export const Feature = styled.div<FeatureProps>`
         flex-direction: column-reverse;
       `}
   }
-
-  padding: 2rem;
 
   @media (max-width: 280px) {
     padding: 0;
@@ -193,7 +207,7 @@ export const Hero = styled.div`
 
 export const FormBox = styled.section`
   width: 80%;
-  max-width: 800px;
+  max-width: 400px;
   padding: 1rem;
 
   display: flex;
@@ -212,7 +226,7 @@ export const FormBox = styled.section`
 
   p {
     margin-top: 1rem;
-    font-size: clamp(0.6rem, 1.0233vw, 1.5rem);
+    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
   }
 `
 
@@ -228,6 +242,26 @@ export const Form = styled.form`
 
   * {
     z-index: 2;
+  }
+
+  input {
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:active,
+    &:-webkit-autofill:focus {
+      caret-color: var(--accent);
+      background-color: var(--input) !important;
+      color: var(--white) !important;
+      -webkit-box-shadow: 0 0 0 1000px var(--input) inset !important;
+      -webkit-text-fill-color: var(--white) !important;
+    }
+  }
+
+  span {
+    font-size: 11px;
+    color: red;
+    font-weight: bold;
+    text-align: left;
   }
 
   &::before {
@@ -264,9 +298,29 @@ export const Footer = styled.footer`
   grid-template-areas: "logo products cases";
   grid-template-columns: 1fr 1fr 1fr;
 
+  h4,
+  a {
+    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
+  }
+
+  @media (max-width: 320px) {
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: center;
+
+    row-gap: 1rem;
+
+    ul {
+      margin-top: 0rem;
+    }
+  }
+
   img {
     position: relative;
-    max-width: 50px;
+    width: clamp(18px, 2vmax, 24px);
+    height: auto;
   }
 `
 

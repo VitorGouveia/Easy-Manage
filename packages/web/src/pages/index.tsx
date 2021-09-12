@@ -1,5 +1,8 @@
 import Typewriter from "typewriter-effect"
+import { useForm } from "react-hook-form"
+import { AxiosError } from "axios"
 
+import { useAuth } from "@hooks"
 import { Button, Link } from "@components"
 import {
   HomeContainer,
@@ -14,8 +17,52 @@ import {
   FooterList,
   FooterTitle
 } from "./styles"
+import { GetStaticProps } from "next"
+
+type UserRegisterProps = {
+  name: string
+  email: string
+  password: string
+}
 
 const Home = () => {
+  const { handleSubmit, setError, formState, register } = useForm()
+  const { signIn } = useAuth()
+
+  const { errors } = formState
+
+  const handleRegister = async ({
+    name,
+    email,
+    password
+  }: UserRegisterProps) => {
+    try {
+      await signIn({
+        name,
+        email,
+        password
+      })
+    } catch (error) {
+      const axiosError = error as AxiosError
+
+      const APIError = axiosError.response.data.error
+
+      if (APIError === "User with that e-mail already exists.") {
+        console.log("sa")
+
+        setError(
+          "email",
+          {
+            message: APIError
+          },
+          {
+            shouldFocus: true
+          }
+        )
+      }
+    }
+  }
+
   return (
     <HomeContainer>
       <TitleBox>
@@ -43,9 +90,7 @@ const Home = () => {
         <p>Uma plaforma para controle de inventário e estoque para empresas.</p>
 
         <Link url="/register" name="register">
-          <Button name="register" url="/register">
-            Crie sua conta
-          </Button>
+          <Button>Crie sua conta</Button>
         </Link>
       </TitleBox>
 
@@ -80,8 +125,12 @@ const Home = () => {
             </summary>
             <p>
               Guarde informações importantes sobre o seu cliente para usar
-              depois <br />
-              É possível criar observações sobre um cliente <br />
+              depois
+              <br />
+              <br />
+              É possível criar observações sobre um cliente
+              <br />
+              <br />
               Faça vendas para clientes registrados na sua conta
             </p>
           </Spec>
@@ -94,14 +143,36 @@ const Home = () => {
           <p>Venha descobrir a nossa plataforma</p>
         </div>
 
-        <Form>
-          <input type="text" placeholder="Nome" />
-          <input type="email" placeholder="E-mail" />
-          <input type="password" placeholder="Senha" />
+        <Form onSubmit={handleSubmit(handleRegister)}>
+          <input
+            required
+            type="text"
+            placeholder="Nome"
+            {...register("name", {
+              required: "Você precisa colocar um nome pro seu usuário"
+            })}
+          />
+          {errors.name && <span>{errors.name.message}</span>}
+          <input
+            required
+            type="email"
+            placeholder="E-mail"
+            {...register("email", {})}
+          />
+          {errors.email && <span>{errors.email.message}</span>}
 
-          <Button name="register" url="/register">
-            Criar conta
-          </Button>
+          <input
+            required
+            type="password"
+            placeholder="Senha"
+            {...register("password", {
+              required:
+                "Você quer que sua conta fique desprotegida? Coloca uma senha!"
+            })}
+          />
+          {errors.password && <span>{errors.password.message}</span>}
+
+          <Button>Criar conta</Button>
         </Form>
       </FormBox>
       <Footer>
