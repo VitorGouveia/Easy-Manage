@@ -7,7 +7,6 @@ export const GetClients = async (token: string): Promise<Client[]> => {
       authorization: `Bearer ${token}`
     }
   })
-
   const { clients } = data
 
   return clients
@@ -62,4 +61,22 @@ export const RemoveClient = async (
       authorization: `Bearer ${token}`
     }
   })
+}
+
+export const UpdateClient = async (
+  id: string,
+  token: string,
+  client: Client
+) => {
+  await api.patch(
+    `/client/${id}`,
+    {
+      ...client
+    },
+    {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    }
+  )
 }

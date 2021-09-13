@@ -17,7 +17,6 @@ import {
   FooterList,
   FooterTitle
 } from "./styles"
-import { GetStaticProps } from "next"
 
 type UserRegisterProps = {
   name: string
@@ -51,7 +50,7 @@ const Home = () => {
         setError(
           "email",
           {
-            message: APIError
+            message: "Um usuário com esse e-mail já existe! Tenta outro."
           },
           {
             shouldFocus: true

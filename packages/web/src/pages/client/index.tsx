@@ -4,8 +4,9 @@ import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
 import { Trash, Edit2, Check } from "react-feather"
 
-import { GetClients } from "@services"
+import { GetClients, CreateClient, RemoveClient, UpdateClient } from "@services"
 import { Button } from "@components"
+import { useAuth } from "@hooks"
 import { Client } from "types/auth"
 
 import {
@@ -16,19 +17,7 @@ import {
   CardTitle,
   NotFoundCard
 } from "@styles/basePage"
-import {} from "./styles"
-
-// import {
-//   GetClients,
-//   CreateClient,
-//   RemoveClient,
-//   SearchClients
-// } from "@services"
-// import { FilesRemove, GenericEdit } from "@heathmont/moon-icons"
-// import { Button, Search, TextInput } from "@heathmont/moon-components"
-
-// import { ClientContainer, CardContainer, Card, NewClientForm } from "./styles"
-// import { useAuth } from "@hooks"
+import { AxiosError } from "axios"
 
 type ClientPageProps = {
   clients: Client[]
@@ -36,7 +25,11 @@ type ClientPageProps = {
 }
 
 const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, setError, formState } = useForm()
+  const { accessToken, user } = useAuth()
+
+  const { errors } = formState
+
   const [clientList, setClientList] = useState<Client[]>([])
   const [searchClientList, setSearchClientList] = useState<Client[]>([])
   const [isEditing, setIsEditing] = useState(false)
@@ -44,18 +37,50 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   useEffect(() => setClientList(clients || []), [])
 
   const handleClientRegister = async (client: Omit<Client, "id">) => {
+    const clientId = new Date().getTime().toString()
+
     setClientList([
       ...clientList,
       {
-        id: new Date().getTime().toString(),
+        id: clientId,
         ...client
       }
     ])
+
+    try {
+      await CreateClient({ ...client }, accessToken)
+    } catch (error) {
+      setClientList([...clientList.filter(client => client.id !== clientId)])
+
+      const axiosError = error as AxiosError
+
+      const APIError = axiosError.response.data.error
+
+      if (
+        APIError === "Unique constraint failed on the fields: (`phoneNumber`)"
+      ) {
+        setError(
+          "phoneNumber",
+          {
+            message: "Um cliente com esse número de telefone já existe"
+          },
+          {
+            shouldFocus: true
+          }
+        )
+      }
+    }
   }
 
   const handleRemoveClient = async (id: string) => {
     setSearchClientList(searchClientList.filter(client => client.id !== id))
     setClientList(clientList.filter(client => client.id !== id))
+
+    try {
+      await RemoveClient(id, user.id, accessToken)
+    } catch (error) {
+      alert("Alguma coisa deu errado ao remover um cliente. Tente novamente")
+    }
   }
 
   const handleEdit = async (id: string) => {
@@ -94,18 +119,42 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
       client => client.id !== id
     )
 
+    const newClient = {
+      id,
+      name: headings[0].innerText,
+      city: headings[1].innerText,
+      phoneNumber: texts[0].innerHTML,
+      opts: texts[1].innerHTML.split("-")[1],
+      houseNumber: smalls[0].innerHTML,
+      street: texts[1].innerHTML.split("-")[0]
+    }
+
     setClientList([
       ...clientListWihtoutClient,
       {
-        id,
-        name: headings[0].innerText,
-        city: headings[1].innerText,
-        phoneNumber: texts[0].innerHTML,
-        opts: texts[1].innerHTML.split("-")[1],
-        houseNumber: smalls[0].innerHTML,
-        street: texts[1].innerHTML.split("-")[0]
+        ...newClient
       }
     ])
+
+    try {
+      await UpdateClient(id, accessToken, { ...newClient })
+    } catch (error) {
+      /* handle the same number error */
+      const axiosError = error as AxiosError
+
+      const APIError = axiosError.response.data.error
+
+      if (
+        APIError === "Unique constraint failed on the fields: (`phoneNumber`)"
+      ) {
+        alert("Um Cliente com esse número de telefone já existe.")
+
+        /* reset all the phoneNumber field to normal */
+        texts[0].innerHTML = "Insira outro número"
+      } else {
+        alert("Alguma coisa deu errado ao editar um cliente. Tente novamente")
+      }
+    }
   }
 
   const handleSearch = async (query: string) => {
@@ -144,6 +193,8 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
               placeholder="Número de telefone"
               {...register("phoneNumber")}
             />
+            {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
+
             <input
               required
               type="text"
@@ -175,7 +226,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
       </section>
 
       <ul>
-        {clientList.length <= 0 ? (
+        {clientList.length <= 0 || notFound ? (
           <NotFoundCard>
             Não consegui achar nenhum cliente.
             <br />
@@ -296,166 +347,6 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
     </Layout>
   )
 }
-// const ClientPage: FC<ClientProps> = ({ clients }) => {
-//   const { register, handleSubmit } = useForm()
-//   const [clientList, setClientList] = useState<Client[]>([])
-//   const [clientSearchList, setClientSearchList] = useState<Client[]>([])
-//   const { accessToken, user } = useAuth()
-
-//   useEffect(() => setClientList(clients), [])
-
-//   const createClient = async (data: Omit<Client, "id">) => {
-//     setClientList([
-//       ...clientList,
-//       {
-//         id: String(new Date().getTime()),
-//         ...data
-//       }
-//     ])
-
-//     await CreateClient({ ...data }, accessToken)
-//   }
-
-//   const searchClients = async (query: string) => {
-//     const clients = await SearchClients(query, accessToken)
-//     setClientSearchList(clients)
-//   }
-
-//   const handleRemoveClient = async (clientId: string) => {
-//     setClientList(clientList.filter(client => client.id !== clientId))
-
-//     await RemoveClient(clientId, user.id, accessToken)
-//   }
-
-//   return (
-//     <ClientContainer>
-//       <div className="search">
-//         <Search
-//           onChange={event => searchClients(event.target.value)}
-//           results={[
-//             {
-//               title: <span>clientes</span>,
-//               items: [
-//                 <>
-//                   {clientSearchList.map(client => {
-//                     return <span>{client.name}</span>
-//                   })}
-//                 </>
-//               ]
-//             }
-//           ]}
-//           loadingMessage={
-//             <CardContainer>
-//               <h1>Todos os Clientes</h1>
-
-//               <Card full={true}>
-//                 <h5>No clients yet.</h5>
-//               </Card>
-//             </CardContainer>
-//           }
-//         />
-//       </div>
-
-//       {clientList.length === 0 ? (
-//         <CardContainer>
-//           <h1>Todos os Clientes</h1>
-
-//           <Card full={true}>
-//             <h5>No clients yet.</h5>
-//           </Card>
-//         </CardContainer>
-//       ) : (
-//         <ul>
-//           <h1>Todos os Clientes</h1>
-
-//           {clientList.map(client => {
-//             return (
-//               <Card key={client.id}>
-//                 <strong>Informações:</strong>
-//                 <p>{client.name}</p>
-//                 <p>{client.phoneNumber}</p>
-
-//                 <strong>Localização:</strong>
-//                 <p>
-//                   {client.street} - {client.city}
-//                 </p>
-//                 <p>casa nº: {client.houseNumber}</p>
-
-//                 <strong>Opcional:</strong>
-//                 <p>{client.opts}</p>
-
-//                 <Button
-//                   onClick={() => handleRemoveClient(client.id)}
-//                   data-attr="remove"
-//                 >
-//                   <FilesRemove fontSize="2rem" />
-//                 </Button>
-
-//                 <Button data-attr="edit">
-//                   <GenericEdit fontSize="2rem" />
-//                 </Button>
-//               </Card>
-//             )
-//           })}
-//         </ul>
-//       )}
-
-//       <section>
-//         <h1>Novo Cliente</h1>
-
-//         <NewClientForm onSubmit={handleSubmit(createClient)}>
-//           <div className="input-wrapper">
-//             <TextInput
-//               required
-//               type="text"
-//               label="name"
-//               placeholder="nome"
-//               {...register("name")}
-//             />
-//             <TextInput
-//               required
-//               type="tel"
-//               label="telephone"
-//               placeholder="telefone"
-//               {...register("phoneNumber")}
-//             />
-//             <TextInput
-//               required
-//               type="text"
-//               label="city"
-//               placeholder="cidade"
-//               {...register("city")}
-//             />
-//             <TextInput
-//               required
-//               type="text"
-//               label="street"
-//               placeholder="rua"
-//               {...register("street")}
-//             />
-//             <TextInput
-//               required
-//               type="text"
-//               label="houseNumber"
-//               placeholder="número da casa"
-//               {...register("houseNumber")}
-//             />
-//             <TextInput
-//               required
-//               type="text"
-//               label="opts"
-//               placeholder="//               {...register("opts")}
-//             />
-//           </div>
-
-//           <Button fullWidth variant="tertiary">
-//             Criar Cliente
-//           </Button>
-//         </NewClientForm>
-//       </section>
-//     </ClientContainer>
-//   )
-// }
 
 export default ClientPage
 
@@ -472,8 +363,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   }
 
   const clients = await GetClients(token)
-
-  if (!!clients === false) {
+  if (clients.length === 0) {
     return {
       props: {
         notFound: true
@@ -483,7 +373,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
 
   return {
     props: {
-      notFound: true
+      clients
     }
   }
 }

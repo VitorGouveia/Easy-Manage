@@ -62,8 +62,6 @@ export const Auth: FC = ({ children }) => {
           name,
           email
         })
-
-        push("/")
       })
     } else {
       push("/login")

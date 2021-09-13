@@ -245,7 +245,8 @@ export const Form = styled.form`
   }
 
   span {
-    font-size: 11px;
+    font-size: 9px;
+    margin-bottom: 0.5rem;
     color: red;
     font-weight: bold;
     text-align: left;

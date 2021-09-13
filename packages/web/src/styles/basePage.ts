@@ -81,6 +81,14 @@ export const Layout = styled.section`
     justify-content: flex-start;
     height: 100%;
   }
+
+  span {
+    font-size: 9px;
+    margin-bottom: 0.5rem;
+    color: red;
+    font-weight: bold;
+    text-align: left;
+  }
 `
 
 export const NewEntity = styled.form`

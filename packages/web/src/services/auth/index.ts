@@ -1,4 +1,4 @@
-export { login, loginToken } from "./login"
-export { register } from "./register"
-export { GetClients, CreateClient, RemoveClient, SearchClients } from "./client"
-export { CreateItem, RemoveItem, GetItems } from "./item"
+export * from "./login"
+export * from "./register"
+export * from "./client"
+export * from "./item"
