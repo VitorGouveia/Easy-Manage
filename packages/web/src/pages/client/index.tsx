@@ -37,20 +37,18 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   useEffect(() => setClientList(clients || []), [])
 
   const handleClientRegister = async (client: Omit<Client, "id">) => {
-    const clientId = new Date().getTime().toString()
-
-    setClientList([
-      ...clientList,
-      {
-        id: clientId,
-        ...client
-      }
-    ])
-
     try {
-      await CreateClient({ ...client }, accessToken)
+      const { data } = await CreateClient({ ...client }, accessToken)
+      console.log(data)
+      setClientList([
+        ...clientList,
+        {
+          id: data.client.id,
+          ...client
+        }
+      ])
     } catch (error) {
-      setClientList([...clientList.filter(client => client.id !== clientId)])
+      console.log(error.response.data.error)
 
       const axiosError = error as AxiosError
 
@@ -79,6 +77,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
     try {
       await RemoveClient(id, user.id, accessToken)
     } catch (error) {
+      console.log(error.response.data.error)
       alert("Alguma coisa deu errado ao remover um cliente. Tente novamente")
     }
   }
