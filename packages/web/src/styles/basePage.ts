@@ -20,11 +20,10 @@ export const Layout = styled.section`
   overflow: hidden;
 
   @media (max-width: 475px) {
-    grid-template-areas: 
+    grid-template-areas:
       "search"
       "entity"
-      "content"
-    ;
+      "content";
 
     overflow: auto;
 
@@ -132,7 +131,22 @@ export const Card = styled.li`
     top: 1rem;
     right: 1rem;
 
-    transition: all 200ms;
+    &[data-icon] {
+      top: 3rem;
+    }
+
+    &[data-icon="check"] {
+      &:hover,
+      &:focus {
+        stroke: var(--green);
+      }
+    }
+
+    &.no-display {
+      display: none;
+    }
+
+    transition: all var(--short-ms);
 
     &:hover,
     &:focus {

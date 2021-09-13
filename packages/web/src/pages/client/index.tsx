@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { FC, useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
-import { Trash } from "react-feather"
+import { Trash, Edit2, Check } from "react-feather"
 
 import { GetClients } from "@services"
 import { Button } from "@components"
@@ -39,6 +39,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   const { register, handleSubmit } = useForm()
   const [clientList, setClientList] = useState<Client[]>([])
   const [searchClientList, setSearchClientList] = useState<Client[]>([])
+  const [isEditing, setIsEditing] = useState(false)
 
   useEffect(() => setClientList(clientList), [])
 
@@ -53,7 +54,58 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   }
 
   const handleRemoveClient = async (id: string) => {
+    setSearchClientList(searchClientList.filter(client => client.id !== id))
     setClientList(clientList.filter(client => client.id !== id))
+  }
+
+  const handleEdit = async (id: string) => {
+    setIsEditing(!isEditing)
+    const headings: NodeListOf<HTMLElement> = document.querySelectorAll(
+      `li[data-id="${id}"] h6`
+    )
+    const texts = document.querySelectorAll(`li[data-id="${id}"] p`)
+    const smalls = document.querySelectorAll(`li[data-id="${id}"] small`)
+
+    const editIcon: HTMLElement = document.querySelector(
+      `li[data-id="${id}"] svg[data-icon="edit"]`
+    )
+    const checkIcon: HTMLElement = document.querySelector(
+      `li[data-id="${id}"] svg[data-icon="check"]`
+    )
+
+    editIcon.classList.toggle("no-display")
+    checkIcon.classList.toggle("no-display")
+
+    if (!isEditing) {
+      headings.forEach(heading =>
+        heading.setAttribute("contenteditable", "true")
+      )
+      texts.forEach(text => text.setAttribute("contenteditable", "true"))
+      smalls.forEach(small => small.setAttribute("contenteditable", "true"))
+    } else {
+      headings.forEach(heading =>
+        heading.setAttribute("contenteditable", "false")
+      )
+      texts.forEach(text => text.setAttribute("contenteditable", "false"))
+      smalls.forEach(small => small.setAttribute("contenteditable", "false"))
+    }
+
+    const clientListWihtoutClient = clientList.filter(
+      client => client.id !== id
+    )
+
+    setClientList([
+      ...clientListWihtoutClient,
+      {
+        id,
+        name: headings[0].innerText,
+        city: headings[1].innerText,
+        phoneNumber: texts[0].innerHTML,
+        opts: texts[1].innerHTML.split("-")[1],
+        houseNumber: smalls[0].innerHTML,
+        street: texts[1].innerHTML.split("-")[0]
+      }
+    ])
   }
 
   const handleSearch = async (query: string) => {
@@ -69,6 +121,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
       <div className="search">
         <input
           type="search"
+          placeholder="Pesquise"
           onChange={event => handleSearch(event.target.value)}
         />
       </div>
@@ -78,6 +131,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
           <div>
             <input
               required
+              autoFocus
               type="text"
               placeholder="Nome"
               {...register("name", {
@@ -145,7 +199,6 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                         />
                         <h6>{client.name}</h6>
                         <p>{client.phoneNumber}</p>
-                        <small>{client.opts}</small>
                       </CardContent>
 
                       <CardTitle>
@@ -153,12 +206,29 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                       </CardTitle>
                       <CardContent type="outlined">
                         <h6>{client.city}</h6>
-                        <p>{client.street}</p>
-                        <small>{client.phoneNumber}</small>
+                        <p>
+                          {client.street} - {client.opts}
+                        </p>
+                        <small>{client.houseNumber}</small>
                       </CardContent>
 
                       <Trash
                         onClick={() => handleRemoveClient(client.id)}
+                        size={16}
+                        color="#fff"
+                      />
+
+                      <Edit2
+                        data-icon="edit"
+                        onClick={() => handleEdit(client.id)}
+                        size={16}
+                        color="#fff"
+                      />
+
+                      <Check
+                        className="no-display"
+                        data-icon="check"
+                        onClick={() => handleEdit(client.id)}
                         size={16}
                         color="#fff"
                       />
@@ -170,7 +240,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
               <>
                 {clientList.map(client => {
                   return (
-                    <Card key={client.id}>
+                    <Card data-id={client.id} key={client.id}>
                       <CardTitle>
                         <h4>Informações</h4>
                       </CardTitle>
@@ -182,7 +252,6 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                         />
                         <h6>{client.name}</h6>
                         <p>{client.phoneNumber}</p>
-                        <small>{client.opts}</small>
                       </CardContent>
 
                       <CardTitle>
@@ -190,12 +259,29 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                       </CardTitle>
                       <CardContent type="outlined">
                         <h6>{client.city}</h6>
-                        <p>{client.street}</p>
-                        <small>{client.phoneNumber}</small>
+                        <p>
+                          {client.street} - {client.opts}
+                        </p>
+                        <small>{client.houseNumber}</small>
                       </CardContent>
 
                       <Trash
                         onClick={() => handleRemoveClient(client.id)}
+                        size={16}
+                        color="#fff"
+                      />
+
+                      <Edit2
+                        data-icon="edit"
+                        onClick={() => handleEdit(client.id)}
+                        size={16}
+                        color="#fff"
+                      />
+
+                      <Check
+                        data-icon="check"
+                        className="no-display"
+                        onClick={() => handleEdit(client.id)}
                         size={16}
                         color="#fff"
                       />
@@ -358,8 +444,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
 //               required
 //               type="text"
 //               label="opts"
-//               placeholder="referência"
-//               {...register("opts")}
+//               placeholder="//               {...register("opts")}
 //             />
 //           </div>
 
