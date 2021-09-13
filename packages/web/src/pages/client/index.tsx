@@ -41,7 +41,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   const [searchClientList, setSearchClientList] = useState<Client[]>([])
   const [isEditing, setIsEditing] = useState(false)
 
-  useEffect(() => setClientList(clientList), [])
+  useEffect(() => setClientList(clients || []), [])
 
   const handleClientRegister = async (client: Omit<Client, "id">) => {
     setClientList([
