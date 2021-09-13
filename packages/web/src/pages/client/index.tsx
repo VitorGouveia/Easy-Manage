@@ -187,7 +187,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
               <>
                 {searchClientList.map(client => {
                   return (
-                    <Card key={client.id}>
+                    <Card data-id={client.id} key={client.id}>
                       <CardTitle>
                         <h4>Informações</h4>
                       </CardTitle>
