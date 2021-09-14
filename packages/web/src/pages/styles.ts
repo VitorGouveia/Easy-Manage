@@ -37,7 +37,7 @@ export const Container = styled.div`
 export const HomeContainer = styled.main`
   height: 100%;
 
-  padding: 4rem 0;
+  padding: clamp(4rem, 4vmax, 20rem) 0;
 
   display: flex;
   flex-direction: column;
