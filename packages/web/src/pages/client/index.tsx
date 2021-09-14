@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next"
+import Image from "next/image"
 import { FC, useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
@@ -243,8 +244,10 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                       </CardTitle>
 
                       <CardContent>
-                        <img
-                          src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
+                        <Image
+                        width={32}
+                        height={32}
+                        src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
                           alt=""
                         />
                         <h6>{client.name}</h6>
@@ -297,6 +300,8 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
 
                       <CardContent>
                         <img
+                          width={32}
+                          height={32}
                           src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
                           alt=""
                         />

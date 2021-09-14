@@ -208,6 +208,7 @@ export const CardContent = styled.article<CardContentProps>`
     "img email"
     "img opts";
   grid-template-columns: 30px 1fr;
+  align-items: center;
 
   column-gap: 0.6rem;
 

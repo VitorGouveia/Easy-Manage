@@ -16,6 +16,9 @@ const pwaPlugin = withPWA({
     sw: "/service-worker.js",
     skipWaiting: true
   },
+  images: {
+    domains: ["avatars.dicebear.com"]
+  },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.

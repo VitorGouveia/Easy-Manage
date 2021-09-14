@@ -1,4 +1,5 @@
 import { GetServerSideProps } from "next"
+import Image from "next/image"
 import { useRouter } from "next/router"
 import { parseCookies } from "nookies"
 
@@ -59,7 +60,9 @@ export const Header = () => {
           <Avatar
             style={{ width: "auto", borderRadius: "0.3rem", height: "36px" }}
           >
-            <img
+            <Image
+            width={32}
+            height={32}
               src={`https://avatars.dicebear.com/api/bottts/${user.id}.svg`}
               alt="Seu avatar"
             />
