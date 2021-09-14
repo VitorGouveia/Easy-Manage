@@ -7,7 +7,7 @@ import { Auth } from "@contexts"
 
 import "@styles/global.scss"
 import "animate.css/animate.min.css"
-import { Container } from "./styles"
+import { Container } from "@styles/home"
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (

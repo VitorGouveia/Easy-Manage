@@ -16,7 +16,7 @@ import {
   Footer,
   FooterList,
   FooterTitle
-} from "./styles"
+} from "../styles/home"
 
 type UserRegisterProps = {
   name: string

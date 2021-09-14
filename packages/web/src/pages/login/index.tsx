@@ -4,7 +4,7 @@
  import { useForm } from "react-hook-form"
  import { Button } from "@components"
 
- import { LoginContainer } from "./styles"
+ import { LoginContainer } from "../../styles/pages/login"
 
  const Login: FC = () => {
    const { logIn } = useAuth()
