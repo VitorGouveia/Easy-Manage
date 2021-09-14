@@ -13,11 +13,8 @@ export const GetItems = async (token: string): Promise<Item[]> => {
   return items
 }
 
-export const CreateItem = async (
-  item: Omit<Item, "id" & "userId">,
-  token: string
-) => {
-  await api.post(
+export const CreateItem = async (item: Omit<Item, "id">, token: string) => {
+  const { data } = await api.post(
     "/item",
     {
       ...item
@@ -28,6 +25,10 @@ export const CreateItem = async (
       }
     }
   )
+
+  return {
+    data
+  }
 }
 
 export const RemoveItem = async (
@@ -43,4 +44,18 @@ export const RemoveItem = async (
       authorization: `Bearer ${token}`
     }
   })
+}
+
+export const UpdateItem = async (id: string, token: string, item: Item) => {
+  await api.patch(
+    `/item/${id}`,
+    {
+      ...item
+    },
+    {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    }
+  )
 }

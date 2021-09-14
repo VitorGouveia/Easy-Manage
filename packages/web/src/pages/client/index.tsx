@@ -4,6 +4,7 @@ import { FC, useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
 import { Trash, Edit2, Check } from "react-feather"
+import { AxiosError } from "axios"
 
 import { GetClients, CreateClient, RemoveClient, UpdateClient } from "@services"
 import { Button } from "@components"
@@ -18,11 +19,10 @@ import {
   CardTitle,
   NotFoundCard
 } from "@styles/basePage"
-import { AxiosError } from "axios"
 
 type ClientPageProps = {
   clients: Client[]
-  notFound: true
+  notFound: boolean
 }
 
 const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
@@ -40,11 +40,11 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   const handleClientRegister = async (client: Omit<Client, "id">) => {
     try {
       const { data } = await CreateClient({ ...client }, accessToken)
-      console.log(data)
+
       setClientList([
         ...clientList,
         {
-          id: data.client.id,
+          id: data.id,
           ...client
         }
       ])
@@ -245,9 +245,9 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
 
                       <CardContent>
                         <Image
-                        width={32}
-                        height={32}
-                        src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
+                          width={32}
+                          height={32}
+                          src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
                           alt=""
                         />
                         <h6>{client.name}</h6>
