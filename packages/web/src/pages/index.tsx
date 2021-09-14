@@ -1,3 +1,4 @@
+import Image from "next/image"
 import Typewriter from "typewriter-effect"
 import { useForm } from "react-hook-form"
 import { AxiosError } from "axios"
@@ -17,6 +18,8 @@ import {
   FooterList,
   FooterTitle
 } from "../styles/home"
+
+import Logo from "../../public/logo.svg"
 
 type UserRegisterProps = {
   name: string
@@ -175,7 +178,7 @@ const Home = () => {
       <Footer>
         <section data-id="1">
           <a href="/">
-            <img src="/logo.png" />
+            <Image width={64} height={64}  src={Logo} alt="fastgas logo" />
           </a>
         </section>
 

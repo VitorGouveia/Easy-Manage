@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const withPlugins = require("next-compose-plugins")
 const withPWA = require("next-pwa")
+const withImage = require("next-images")
 const runtimeCaching = require("next-pwa/cache")
 
 const debug = process.env.NODE_ENV !== "production"
@@ -21,3 +22,7 @@ const pwaPlugin = withPWA({
     ignoreDuringBuilds: true
   }
 })
+
+const imgPlugin = withImage()
+
+module.exports = withPlugins([pwaPlugin, imgPlugin])
