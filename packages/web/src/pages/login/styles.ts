@@ -61,11 +61,11 @@ export const LoginContainer = styled.section`
 
     button {
       margin-top: 1.4rem;
-      background: ${props => props.theme.color.dodoria[100]};
+      background: var(--accent);
 
       &:hover,
       &:focus {
-        background: ${props => props.theme.color.dodoria[10]} !important;
+        background: var(--accent-hover) !important;
       }
     }
   }
