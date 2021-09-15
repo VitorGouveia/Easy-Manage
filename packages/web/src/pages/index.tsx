@@ -17,7 +17,7 @@ import {
   Footer,
   FooterList,
   FooterTitle
-} from "../styles/home"
+} from "@styles/home"
 
 import Logo from "../../public/logo.svg"
 
@@ -178,7 +178,7 @@ const Home = () => {
       <Footer>
         <section data-id="1">
           <a href="/">
-            <Image width={64} height={64}  src={Logo} alt="fastgas logo" />
+            <Image width={64} height={64} src={Logo} alt="fastgas logo" />
           </a>
         </section>
 

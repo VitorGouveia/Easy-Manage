@@ -40,6 +40,9 @@ export const Logo = styled.a`
 
   &:hover,
   &:focus {
+    p {
+      color: #fff;
+    }
     background: #525252;
   }
 
@@ -110,7 +113,17 @@ export const User = styled.section`
   display: flex;
   align-items: center;
 
+  width: 100%;
+
+  justify-content: space-around;
+  align-items: center;
+
   color: var(--accent);
+
+  button {
+    height: 36px;
+    padding: 0.6rem 1rem;
+  }
 `
 
 export const Avatar = styled.div`

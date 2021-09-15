@@ -1,6 +1,6 @@
 import { GetServerSideProps } from "next"
-import Image from "next/image"
 import { useRouter } from "next/router"
+import Image from "next/image"
 import { parseCookies } from "nookies"
 
 import { Link, Button } from "@components"
@@ -52,28 +52,38 @@ export const Header = () => {
               </NavbarItem>
             )
           })}
-          </Navbar>
+        </Navbar>
       </nav>
 
       <User>
         {isAuthenticated ? (
-          <Avatar
-            style={{ width: "auto", borderRadius: "0.3rem", height: "36px" }}
-          >
-            <Image
-            width={32}
-            height={32}
-              src={`https://avatars.dicebear.com/api/bottts/${user.id}.svg`}
-              alt="Seu avatar"
-            />
-            <span>
-              <strong>{user.name}</strong>
-            </span>
-          </Avatar>
+          <>
+            <Avatar
+              style={{ width: "auto", borderRadius: "0.3rem", height: "36px" }}
+            >
+              <Image
+                width={32}
+                height={32}
+                src={`https://avatars.dicebear.com/api/bottts/${user.id}.svg`}
+                alt="Seu avatar"
+              />
+              <span>
+                <strong>{user.name}</strong>
+              </span>
+            </Avatar>
+
+            <Link url="/order" name="order">
+              <Button outlined>Criar Pedido</Button>
+            </Link>
+          </>
         ) : (
           <>
-            <Button>login</Button>
-            <Button>registre-se</Button>
+            <Link name="login" url="/login">
+              <Button>login</Button>
+            </Link>
+            <Link name="register" url="/register">
+              <Button>Registre-se</Button>
+            </Link>
           </>
         )}
       </User>

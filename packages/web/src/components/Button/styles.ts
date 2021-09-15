@@ -1,6 +1,10 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
-export const ButtonContainer = styled.button`
+interface ButtonContainerProps {
+  outlined: boolean
+}
+
+export const ButtonContainer = styled.button<ButtonContainerProps>`
   outline: 0;
   border: 0;
   color: #fff;
@@ -39,14 +43,27 @@ export const ButtonContainer = styled.button`
       content: "";
 
       position: absolute;
-      --border-spacing: -9px;
-      border-radius: 1rem;
+      --border-spacing: -10px;
+      border-radius: 0.8rem;
       top: var(--border-spacing);
       left: var(--border-spacing);
       right: var(--border-spacing);
       bottom: var(--border-spacing);
 
-      border: 3px solid #dcdce6;
+      border: 2px solid #dcdce6;
     }
   }
+  ${props =>
+    props.outlined &&
+    css`
+      background: transparent;
+      border: 1.5px solid var(--accent);
+
+      &:hover,
+      &:focus {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+    `}
 `

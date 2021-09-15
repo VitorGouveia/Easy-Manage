@@ -12,8 +12,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@zeit/next-css": "^1.0.1",
     "animate.css": "^4.1.1",
     "axios": "^0.21.1",
+    "babel-plugin-styled-components": "^1.13.2",
     "jsonwebtoken": "^8.5.1",
     "next": "11.1.2",
     "next-images": "^1.8.1",

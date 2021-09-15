@@ -8,7 +8,7 @@ const debug = process.env.NODE_ENV !== "production"
 
 const pwaPlugin = withPWA({
   reactStrictMode: true,
-  assetPrefix: !debug ? "/Next-gh-page-example/" : "",
+  // assetPrefix: !debug ? "/Next-gh-page-example/" : "",
   pwa: {
     dest: "public",
     runtimeCaching,

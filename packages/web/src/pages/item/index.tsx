@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next"
-import Image from "next/image"
 import { FC, useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
@@ -26,10 +25,8 @@ type ItemPageProps = {
 }
 
 const ItemPage: FC<ItemPageProps> = ({ items, notFound }) => {
-  const { register, handleSubmit, setError, formState } = useForm()
+  const { register, handleSubmit } = useForm()
   const { accessToken, user } = useAuth()
-
-  const { errors } = formState
 
   const [itemList, setItemList] = useState<Item[]>([])
   const [searchItemList, setSearchItemList] = useState<Item[]>([])
@@ -215,7 +212,7 @@ const ItemPage: FC<ItemPageProps> = ({ items, notFound }) => {
                       </CardTitle>
 
                       <CardContent>
-                        <Image
+                        <img
                           width={32}
                           height={32}
                           src={`https://avatars.dicebear.com/api/bottts/${item.name}.svg`}
@@ -268,7 +265,7 @@ const ItemPage: FC<ItemPageProps> = ({ items, notFound }) => {
                       </CardTitle>
 
                       <CardContent>
-                        <Image
+                        <img
                           width={32}
                           height={32}
                           src={`https://avatars.dicebear.com/api/bottts/${item.name}.svg`}
