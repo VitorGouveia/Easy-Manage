@@ -34,6 +34,17 @@ export const Header = () => {
     }
   ]
 
+  const opts = [
+    {
+      path: "/login",
+      name: "Login"
+    },
+    {
+      path: "/register",
+      name: "Registre-se"
+    }
+  ]
+
   return (
     <HeaderContainer>
       <Logo href="/">
@@ -78,12 +89,15 @@ export const Header = () => {
           </>
         ) : (
           <>
-            <Link name="login" url="/login">
-              <Button>login</Button>
-            </Link>
-            <Link name="register" url="/register">
-              <Button>Registre-se</Button>
-            </Link>
+            {opts.map(({ name, path }) => {
+              return (
+                <Link name={name} url={path}>
+                  <Button active={pathname === path} outlined>
+                    {name}
+                  </Button>
+                </Link>
+              )
+            })}
           </>
         )}
       </User>

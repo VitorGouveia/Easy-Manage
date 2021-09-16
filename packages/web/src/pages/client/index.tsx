@@ -3,7 +3,7 @@ import Image from "next/image"
 import { FC, useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
-import { Trash, Edit2, Check } from "react-feather"
+import { Trash, Edit2, Check, Search } from "react-feather"
 import { AxiosError } from "axios"
 
 import { GetClients, CreateClient, RemoveClient, UpdateClient } from "@services"
@@ -173,6 +173,8 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
           placeholder="Pesquise"
           onChange={event => handleSearch(event.target.value)}
         />
+
+        <Search size={16} color="#fff" />
       </div>
 
       <section>

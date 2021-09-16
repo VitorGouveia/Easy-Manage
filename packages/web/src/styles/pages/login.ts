@@ -11,6 +11,15 @@ export const LoginContainer = styled.section`
 
   padding: calc(10% + var(--header-height)) 0 10% 0 !important;
 
+  span {
+    font-size: 9px;
+    margin-bottom: 0.5rem;
+    color: red;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+  }
+
   header {
     display: flex;
     flex-direction: column;
@@ -24,6 +33,7 @@ export const LoginContainer = styled.section`
       margin-top: 1rem;
       font-size: 2rem;
       color: #dedede;
+      text-align: center;
     }
 
     img {
@@ -35,38 +45,41 @@ export const LoginContainer = styled.section`
     width: 100%;
     padding: 1rem;
 
-    span {
-      position: absolute;
-      width: 1px;
-      height: 1px;
+    display: flex;
+    flex-direction: column;
+
+    width: clamp(30px, 50vw, 500px);
+
+    align-items: center;
+
+    @media (max-width: 320px) {
+      width: 100%;
       padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
     }
 
-    & > div label {
-      &:first-child input {
+    input {
+      width: 100%;
+
+      &:first-of-type {
         border-end-end-radius: 0;
         border-end-start-radius: 0;
       }
 
-      &:last-child input {
+      &:last-of-type {
         border-start-start-radius: 0;
         border-start-end-radius: 0;
       }
     }
+  }
 
-    button {
-      margin-top: 1.4rem;
-      background: var(--accent);
+  button {
+    margin-top: 1.4rem;
+    background: var(--accent);
+    width: 100%;
 
-      &:hover,
-      &:focus {
-        background: var(--accent-hover) !important;
-      }
+    &:hover,
+    &:focus {
+      background: var(--accent-hover) !important;
     }
   }
 

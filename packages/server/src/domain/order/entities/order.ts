@@ -5,6 +5,7 @@ export class Order {
 
   public quantity: number
   public itemId: string
+  public clientId: string
   public userId: string
 
   constructor(props: Omit<Order, "id">) {

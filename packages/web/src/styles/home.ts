@@ -67,7 +67,6 @@ export const TitleBox = styled.article`
     font-family: "Sora";
     color: #fff;
     font-size: 72px;
-    font-size: clamp(1.2rem, 1rem + 3.2558vw, 4.5rem);
 
     strong {
       color: var(--accent);
@@ -77,7 +76,6 @@ export const TitleBox = styled.article`
   p {
     margin: 2rem 0;
     width: 30ch;
-    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
   }
 
   button {
@@ -182,15 +180,8 @@ export const Spec = styled.article`
   display: flex;
   flex-direction: column;
 
-  summary {
-    font-size: clamp(1rem, 1rem + 0.904vw, 3rem);
-    color: #fff;
-    font-weight: 700;
-  }
-
   p {
     margin-top: 1rem;
-    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
   }
 `
 
@@ -221,12 +212,10 @@ export const FormBox = styled.section`
 
   h2 {
     color: #ddd;
-    font-size: clamp(0.6rem, 1.3rem + 0.904vw, 3rem);
   }
 
   p {
     margin-top: 1rem;
-    font-size: clamp(0.6rem, 0.2721rem + 1.0233vw, 1.5rem);
   }
 `
 

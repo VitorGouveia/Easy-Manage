@@ -2,6 +2,7 @@ import styled, { css } from "styled-components"
 
 interface ButtonContainerProps {
   outlined: boolean
+  active: boolean
 }
 
 export const ButtonContainer = styled.button<ButtonContainerProps>`
@@ -53,6 +54,16 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
       border: 2px solid #dcdce6;
     }
   }
+  ${props =>
+    props.active &&
+    css`
+      background: var(--accent) !important;
+
+      &:hover {
+        background: var(--accent-hover) !important;
+      }
+    `}
+
   ${props =>
     props.outlined &&
     css`

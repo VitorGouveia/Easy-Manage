@@ -1,98 +1,126 @@
 import styled from "styled-components"
 
 export const RegisterContainer = styled.section`
-  height: 100%;
+  width: 100%;
+  max-width: 1120px;
+  height: 100vh;
+  margin: 0 auto;
+
+  display: grid;
+  place-items: center;
+`
+
+export const RegisterContent = styled.div`
+  width: 90%;
+  padding: clamp(1rem, 10vmax, 6rem);
+  /* background: #181821; */
+  border: 1px solid #272735;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+  border-radius: clamp(8px, 1vmax, 12px);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 500px) {
+    padding: clamp(1rem, 5vmax, 6rem);
+  }
+`
+
+export const RegisterSection = styled.section`
+  width: 100%;
+  /* max-width: 380px; */
+
+  display: flex;
+  justify-content: space-between;
+
+  summary {
+    margin: clamp(0.5rem, 2vmax, 4rem) 0 clamp(0.5rem, 1vmax, 2rem);
+  }
+
+  p {
+    width: 20ch;
+  }
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+
+    img {
+      width: 15%;
+      height: auto;
+    }
+
+    article {
+      display: grid;
+      grid-template-areas:
+        "title       logo"
+        "description logo";
+
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+
+      summary {
+        grid-area: title;
+      }
+
+      p {
+        grid-area: description;
+      }
+
+      & > div {
+        grid-area: logo;
+        grid-row: 1 / 3;
+      }
+    }
+
+    form {
+      margin-top: 3rem;
+
+      align-self: center;
+
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      align-items: stretch;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 425px) {
+    article {
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      p {
+        width: 100%;
+      }
+
+      & > div {
+        display: none !important;
+      }
+    }
+  }
+`
+
+export const Form = styled.form`
+  width: 50%;
+  max-width: 450px;
 
   display: flex;
   flex-direction: column;
 
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
 
-  padding: calc(10% + var(--header-height)) 0 10% 0 !important;
-
-  header {
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    padding: 1rem;
-
-    h1 {
-      margin-top: 1rem;
-      font-size: 2rem;
-      color: #dedede;
-    }
-
-    img {
-      width: 60px;
-    }
+  input {
+    margin-top: 0.8rem;
   }
 
-  form {
-    width: 100%;
-    padding: 1rem;
-
-    span {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border-width: 0;
-    }
-
-    & > div label {
-      &:first-child input {
-        border-end-end-radius: 0;
-        border-end-start-radius: 0;
-      }
-
-      &:nth-child(even) input {
-        border-radius: 0;
-      }
-
-      &:last-child input {
-        border-start-start-radius: 0;
-        border-start-end-radius: 0;
-      }
-    }
-
-    button {
-      margin-top: 1.4rem;
-      background: ${props => props.theme.color.dodoria[100]};
-
-      &:hover,
-      &:focus {
-        background: ${props => props.theme.color.dodoria[10]} !important;
-      }
-    }
-  }
-
-  footer {
-    width: 100%;
-    padding: 1rem;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: flex-start;
-
-    small {
-      margin-left: 0.4rem;
-      color: #dedede;
-    }
-    &:hover {
-      small {
-        text-decoration: underline;
-      }
-      cursor: pointer;
-      filter: brightness(120%);
-    }
+  button {
+    margin-top: 0.8rem;
   }
 `
