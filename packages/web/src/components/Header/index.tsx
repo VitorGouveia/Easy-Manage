@@ -91,7 +91,7 @@ export const Header = () => {
           <>
             {opts.map(({ name, path }) => {
               return (
-                <Link name={name} url={path}>
+                <Link key={name} name={name} url={path}>
                   <Button active={pathname === path} outlined>
                     {name}
                   </Button>
