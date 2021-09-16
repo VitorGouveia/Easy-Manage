@@ -1,9 +1,10 @@
 import { GetServerSideProps } from "next"
-import { FC, useEffect, useState } from "react"
+import { FC, useRef, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
 import { Trash, Edit2, Check } from "react-feather"
 import { AxiosError } from "axios"
+import { BottomSheet, BottomSheetRef } from "react-spring-bottom-sheet"
 
 import { GetItems, CreateItem, RemoveItem, UpdateItem } from "@services"
 import { Button } from "@components"
@@ -16,27 +17,35 @@ import {
   Card,
   CardContent,
   CardTitle,
-  NotFoundCard
+  NotFoundCard,
+  NewEntityWrapper,
+  SheetButton
 } from "@styles/basePage"
 
 type ItemPageProps = {
   items: Item[]
-  notFound: boolean
 }
 
-const ItemPage: FC<ItemPageProps> = ({ items, notFound }) => {
+const ItemPage: FC<ItemPageProps> = ({ items }) => {
   const { register, handleSubmit } = useForm()
   const { accessToken, user } = useAuth()
 
-  const [itemList, setItemList] = useState<Item[]>([])
+  const [itemList, setItemList] = useState<Item[]>([...items || []])
   const [searchItemList, setSearchItemList] = useState<Item[]>([])
   const [isEditing, setIsEditing] = useState(false)
+  const [openSheet, setOpenSheet] = useState(false)
 
-  useEffect(() => {
-    setItemList(items || [])
-  }, [])
+  const sheetRef = useRef<BottomSheetRef>(null)
 
   const handleRegister = async (item: Omit<Item, "id">) => {
+    setItemList([
+      {
+        id: new Date().getTime().toString(),
+        ...item
+      },
+      itemList
+    ])
+
     try {
       const { data } = await CreateItem({ ...item }, accessToken)
 

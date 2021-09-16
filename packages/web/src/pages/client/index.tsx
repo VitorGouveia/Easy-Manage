@@ -39,11 +39,12 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
 
   const sheetRef = useRef<BottomSheetRef>(null)
 
-  const onDismiss = () => {
-    setOpenSheet(false)
-  }
-
   const handleClientRegister = async (client: Omit<Client, "id">) => {
+    const newClient: Client = {
+      id: new Date().getTime().toString(),
+      ...client
+    }
+
     setClientList([
       {
         id: new Date().getTime().toString(),
@@ -51,9 +52,13 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
       },
       ...clientList
     ])
+
     try {
       console.log(clientList)
-      // const { data } = await CreateClient({ ...client }, accessToken)
+
+      const { data } = await CreateClient({ ...client }, accessToken)
+
+      setClientList(clientList.filter(client => client.id !== id))
     } catch (error) {
       console.log(error.response.data.error)
 
@@ -317,7 +322,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
         open={openSheet}
         blocking={false}
         ref={sheetRef}
-        onDismiss={() => onDismiss()}
+        onDismiss={() => setOpenSheet(false)}
         defaultSnap={({ snapPoints, lastSnap }) =>
           lastSnap ?? Math.min(...snapPoints)
         }
