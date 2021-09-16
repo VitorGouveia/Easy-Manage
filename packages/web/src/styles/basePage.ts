@@ -107,14 +107,6 @@ export const Layout = styled.section`
       padding: 0 1rem;
     }
   }
-
-  span {
-    font-size: 9px;
-    margin-bottom: 0.5rem;
-    color: red;
-    font-weight: bold;
-    text-align: left;
-  }
 `
 
 export const NewEntityWrapper = styled.div`
@@ -133,6 +125,14 @@ export const NewEntityWrapper = styled.div`
 export const NewEntity = styled.form`
   width: 80%;
   height: 100%;
+
+  span {
+    font-size: clamp(0.5rem, 2vmax, 0.8rem);
+    margin-bottom: 0.5rem;
+    color: red;
+    font-weight: bold;
+    text-align: left;
+  }
 
   display: grid;
   grid-template-areas:

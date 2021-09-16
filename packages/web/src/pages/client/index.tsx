@@ -48,13 +48,12 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
     try {
       const { data } = await CreateClient({ ...client }, accessToken)
 
-      setClientList([
-        ...clientList,
-        {
-          id: data.id,
-          ...client
-        }
-      ])
+      const newClient: Client = {
+        id: data.client.id,
+        ...client
+      }
+
+      setClientList([...clientList, newClient])
     } catch (error) {
       console.log(error.response.data.error)
 
@@ -327,7 +326,9 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
         header={<></>}
         footer={
           <SheetButton>
-            <Button outlined>Fechar</Button>
+            <Button outlined onClick={() => setOpenSheet(false)}>
+              Fechar
+            </Button>
           </SheetButton>
         }
       >
@@ -344,6 +345,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
               })}
             />
 
+            {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
             <input
               required
               type="tel"
@@ -351,7 +353,6 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
               id="phoneNumber"
               {...register("phoneNumber")}
             />
-            {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
 
             <input
               required
