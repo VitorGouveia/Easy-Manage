@@ -10,9 +10,9 @@ export const ButtonContainer = styled.button<ButtonContainerProps>`
   border: 0;
   color: #fff;
 
-  font-size: clamp(0.6rem, 1vw, 1.2rem);
+  font-size: clamp(0.6rem, 1.4vw, 1.2rem);
   font-weight: bold;
-  padding: clamp(1rem, 1.4vmax, 1.8rem) 3.125rem;
+  padding: clamp(1rem, 1vmax, 1.8rem) 3.125rem;
   border-radius: clamp(3px, 0.3rem, 12px);
 
   background: gray;
