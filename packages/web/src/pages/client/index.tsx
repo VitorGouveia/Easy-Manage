@@ -40,25 +40,17 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
   const sheetRef = useRef<BottomSheetRef>(null)
 
   const handleClientRegister = async (client: Omit<Client, "id">) => {
-    const newClient: Client = {
-      id: new Date().getTime().toString(),
-      ...client
-    }
-
-    setClientList([
-      {
-        id: new Date().getTime().toString(),
-        ...client
-      },
-      ...clientList
-    ])
-
     try {
-      console.log(clientList)
-
+      
       const { data } = await CreateClient({ ...client }, accessToken)
-
-      setClientList(clientList.filter(client => client.id !== id))
+      
+      setClientList([
+        {
+          id: data.client.id,
+          ...client
+        },
+        ...clientList
+      ])
     } catch (error) {
       console.log(error.response.data.error)
 

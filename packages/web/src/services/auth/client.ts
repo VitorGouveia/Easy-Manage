@@ -27,10 +27,17 @@ export const SearchClients = async (
   return clients
 }
 
+type CreateClientResponse = {
+  data: {
+    client: Client
+    message: string
+  }
+}
+
 export const CreateClient = async (
   client: Omit<Client, "id">,
   token: string
-) => {
+): Promise<CreateClientResponse> => {
   const { data } = await api.post(
     "/client",
     {
@@ -41,7 +48,7 @@ export const CreateClient = async (
         authorization: `Bearer ${token}`
       }
     }
-  )
+  ) as CreateClientResponse
 
   return {
     data
