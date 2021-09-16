@@ -37,6 +37,17 @@ const Register: FC = () => {
       const APIError = axiosError.response.data.error
 
       console.log(APIError)
+      if (APIError === "User with that e-mail already exists.") {
+        setError(
+          "email",
+          {
+            message: "Um usuário com esse e-mail já existe."
+          },
+          {
+            shouldFocus: true
+          }
+        )
+      }
     }
   }
 
@@ -61,6 +72,7 @@ const Register: FC = () => {
               {...register("name")}
             />
 
+            {errors.email && <span>{errors.email.message}</span>}
             <input
               required
               type="text"

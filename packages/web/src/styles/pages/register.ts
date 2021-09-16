@@ -8,6 +8,15 @@ export const RegisterContainer = styled.section`
 
   display: grid;
   place-items: center;
+
+  span {
+    font-size: 9px;
+    margin-top: 0.5rem;
+    color: red;
+    font-weight: bold;
+    text-align: left;
+    width: 100%;
+  }
 `
 
 export const RegisterContent = styled.div`

@@ -1,14 +1,9 @@
 import Anchor from "next/link"
-import { FC, ReactNode } from "react"
+import { ButtonHTMLAttributes, FC } from "react"
 
-interface LinkProps {
+interface LinkProps extends ButtonHTMLAttributes<HTMLAnchorElement> {
   url: string
   name: string
-  children: ReactNode
-  className?: string
-  onClick?: () => void
-  onMouseOver?: () => void
-  onMouseLeave?: () => void
 }
 
 export const Link: FC<LinkProps> = ({

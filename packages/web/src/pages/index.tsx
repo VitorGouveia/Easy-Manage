@@ -2,6 +2,8 @@ import Image from "next/image"
 import Typewriter from "typewriter-effect"
 import { useForm } from "react-hook-form"
 import { AxiosError } from "axios"
+import { ArrowDown } from "react-feather"
+import { motion, useViewportScroll, useTransform } from "framer-motion"
 
 import { useAuth } from "@hooks"
 import { Button, Link } from "@components"
@@ -28,6 +30,12 @@ type UserRegisterProps = {
 }
 
 const Home = () => {
+  const { scrollY } = useViewportScroll()
+  const Feature1Opacity = useTransform(scrollY, [230, 600], [0, 1])
+  const Feature1ImgOpacity = useTransform(scrollY, [320, 620], [0, 1])
+  const Feature2Opacity = useTransform(scrollY, [600, 1000], [0, 1])
+  const Feature2ImgOpacity = useTransform(scrollY, [730, 1100], [0, 1])
+
   const { handleSubmit, setError, formState, register } = useForm()
   const { signIn } = useAuth()
 
@@ -92,20 +100,30 @@ const Home = () => {
         <Link url="/register" name="register">
           <Button>Crie sua conta</Button>
         </Link>
+
+        <Link id="arrow" url="#features" name="features">
+          <ArrowDown size={32} />
+        </Link>
       </TitleBox>
 
-      <FeaturesBox>
+      <FeaturesBox id="features">
         <Feature>
           <Spec>
-            <summary>Tenha um controle total das suas vendas</summary>
-            <p>
+            <motion.summary style={{ opacity: Feature1Opacity }}>
+              Tenha um controle total das suas vendas
+            </motion.summary>
+            {/* <summary>Tenha um controle total das suas vendas</summary> */}
+            <motion.p style={{ opacity: Feature1Opacity }}>
               Aqui você consegue customizar todo o aspecto do seu estoque,
               preços, histórico, discontos
-            </p>
+            </motion.p>
           </Spec>
 
           <Hero>
-            <img
+            <motion.img
+              style={{
+                opacity: Feature1ImgOpacity
+              }}
               src="https://loyverse.com/sites/all/themes/loyversecom/images/product/adv-inventory/notebook.png"
               alt=""
             />
@@ -114,16 +132,17 @@ const Home = () => {
 
         <Feature hasLeftImg>
           <Hero>
-            <img
+            <motion.img
+              style={{ opacity: Feature2ImgOpacity }}
               src="https://www.trisearch.com.au/wp-content/uploads/2020/07/Depositphotos_151249562_m-2015.jpg"
               alt=""
             />
           </Hero>
           <Spec>
-            <summary>
+            <motion.summary style={{ opacity: Feature2Opacity }}>
               Registre clientes recorrentes da sua base de dados
-            </summary>
-            <p>
+            </motion.summary>
+            <motion.p style={{ opacity: Feature2Opacity }}>
               Guarde informações importantes sobre o seu cliente para usar
               depois
               <br />
@@ -132,7 +151,7 @@ const Home = () => {
               <br />
               <br />
               Faça vendas para clientes registrados na sua conta
-            </p>
+            </motion.p>
           </Spec>
         </Feature>
       </FeaturesBox>

@@ -37,12 +37,12 @@ export const Container = styled.div`
 export const HomeContainer = styled.main`
   height: 100%;
 
-  padding: clamp(4rem, 4vmax, 20rem) 0;
+  /* padding: clamp(4rem, 4vmax, 20rem) 0; */
 
   display: flex;
   flex-direction: column;
 
-  gap: 10rem;
+  /* gap: 10rem; */
 
   align-items: center;
   justify-content: flex-start;
@@ -53,13 +53,20 @@ export const HomeContainer = styled.main`
 `
 
 export const TitleBox = styled.article`
-  width: 80%;
+  width: 100%;
+  --height: 85vh;
+
+  height: var(--height);
+  min-height: var(--height);
+  max-height: var(--height);
 
   display: flex;
   flex-direction: column;
 
   align-items: center;
   justify-content: center;
+
+  position: relative;
 
   text-align: center;
 
@@ -88,6 +95,11 @@ export const TitleBox = styled.article`
     }
   }
 
+  a#arrow {
+    position: absolute;
+    bottom: 2rem;
+  }
+
   @media (max-width: 450px) {
     text-align: left;
     align-items: flex-start;
@@ -112,7 +124,6 @@ export const TitleBox = styled.article`
 
 export const FeaturesBox = styled.section`
   width: 100%;
-
   padding: 1rem;
 
   background: #000;
@@ -198,7 +209,7 @@ export const Hero = styled.div`
 
 export const FormBox = styled.section`
   width: 80%;
-  max-width: 400px;
+  max-width: 600px;
   padding: 1rem;
 
   display: flex;
