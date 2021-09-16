@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next"
-import { FC, useEffect, useState } from "react"
+import { FC, useRef, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
 import { Trash, Edit2, Check, Search, Plus } from "react-feather"
 import { AxiosError } from "axios"
-import { BottomSheet } from "react-spring-bottom-sheet"
+import { BottomSheet, BottomSheetRef } from "react-spring-bottom-sheet"
 
 import { GetClients, CreateClient, RemoveClient, UpdateClient } from "@services"
 import { Button } from "@components"
@@ -24,36 +24,36 @@ import {
 
 type ClientPageProps = {
   clients: Client[]
-  notFound: boolean
 }
 
-const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
+const ClientPage: FC<ClientPageProps> = ({ clients }) => {
   const { register, handleSubmit, setError, formState } = useForm()
   const { accessToken, user } = useAuth()
 
   const { errors } = formState
 
-  const [clientList, setClientList] = useState<Client[]>([])
+  const [clientList, setClientList] = useState<Client[]>([...(clients || [])])
   const [searchClientList, setSearchClientList] = useState<Client[]>([])
   const [isEditing, setIsEditing] = useState(false)
   const [openSheet, setOpenSheet] = useState(false)
+
+  const sheetRef = useRef<BottomSheetRef>(null)
 
   const onDismiss = () => {
     setOpenSheet(false)
   }
 
-  useEffect(() => setClientList(clients || []), [])
-
   const handleClientRegister = async (client: Omit<Client, "id">) => {
-    try {
-      const { data } = await CreateClient({ ...client }, accessToken)
-
-      const newClient: Client = {
-        id: data.client.id,
+    setClientList([
+      {
+        id: new Date().getTime().toString(),
         ...client
-      }
-
-      setClientList([...clientList, newClient])
+      },
+      ...clientList
+    ])
+    try {
+      console.log(clientList)
+      // const { data } = await CreateClient({ ...client }, accessToken)
     } catch (error) {
       console.log(error.response.data.error)
 
@@ -190,7 +190,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
       </section>
 
       <ul>
-        {clientList.length <= 0 || notFound ? (
+        {clientList.length <= 0 ? (
           <NotFoundCard>
             Não consegui achar nenhum cliente.
             <br />
@@ -315,18 +315,28 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
 
       <BottomSheet
         open={openSheet}
+        blocking={false}
+        ref={sheetRef}
         onDismiss={() => onDismiss()}
         defaultSnap={({ snapPoints, lastSnap }) =>
           lastSnap ?? Math.min(...snapPoints)
         }
         snapPoints={({ maxHeight }) => [
-          maxHeight - maxHeight / 2,
-          maxHeight * 0.8
+          maxHeight - maxHeight / 10,
+          maxHeight / 6,
+          maxHeight * 0.6
         ]}
         header={<></>}
         footer={
           <SheetButton>
-            <Button outlined onClick={() => setOpenSheet(false)}>
+            <Button
+              outlined
+              onClick={() => {
+                sheetRef.current.snapTo(({ snapPoints }) =>
+                  Math.min(...snapPoints)
+                )
+              }}
+            >
               Fechar
             </Button>
           </SheetButton>
@@ -412,7 +422,7 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (clients.length === 0) {
     return {
       props: {
-        notFound: true
+        clients: []
       }
     }
   }
