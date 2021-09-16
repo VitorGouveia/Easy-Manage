@@ -9,6 +9,8 @@ import "@styles/global.scss"
 import "animate.css/animate.min.css"
 import { Container } from "@styles/home"
 
+import "react-spring-bottom-sheet/dist/style.css"
+
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   return (
     <Auth>

@@ -7,9 +7,14 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean
 }
 
-export const Button: FC<ButtonProps> = ({ children, outlined, active }) => {
+export const Button: FC<ButtonProps> = ({
+  children,
+  outlined,
+  active,
+  ...rest
+}) => {
   return (
-    <ButtonContainer active={active} outlined={outlined}>
+    <ButtonContainer active={active} outlined={outlined} {...rest}>
       {children}
     </ButtonContainer>
   )

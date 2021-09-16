@@ -46,6 +46,10 @@ class CustomDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;500;600;700&display=swap"
             rel="stylesheet"
           />
+          <link
+            rel="stylesheet"
+            href="https://unpkg.com/react-spring-bottom-sheet/dist/style.css"
+          />
           <NextScript />
         </Head>
         <body>

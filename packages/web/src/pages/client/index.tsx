@@ -1,10 +1,10 @@
 import { GetServerSideProps } from "next"
-import Image from "next/image"
 import { FC, useEffect, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
-import { Trash, Edit2, Check, Search } from "react-feather"
+import { Trash, Edit2, Check, Search, Plus } from "react-feather"
 import { AxiosError } from "axios"
+import { BottomSheet } from "react-spring-bottom-sheet"
 
 import { GetClients, CreateClient, RemoveClient, UpdateClient } from "@services"
 import { Button } from "@components"
@@ -17,7 +17,9 @@ import {
   Card,
   CardContent,
   CardTitle,
-  NotFoundCard
+  NotFoundCard,
+  NewEntityWrapper,
+  SheetButton
 } from "@styles/basePage"
 
 type ClientPageProps = {
@@ -34,6 +36,11 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
   const [clientList, setClientList] = useState<Client[]>([])
   const [searchClientList, setSearchClientList] = useState<Client[]>([])
   const [isEditing, setIsEditing] = useState(false)
+  const [openSheet, setOpenSheet] = useState(false)
+
+  const onDismiss = () => {
+    setOpenSheet(false)
+  }
 
   useEffect(() => setClientList(clients || []), [])
 
@@ -178,53 +185,9 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
       </div>
 
       <section>
-        <NewEntity onSubmit={handleSubmit(handleClientRegister)}>
-          <div>
-            <input
-              required
-              autoFocus
-              type="text"
-              placeholder="Nome"
-              {...register("name", {
-                required: "Você precisa colocar um nome pro seu cliente"
-              })}
-            />
-            <input
-              required
-              type="tel"
-              placeholder="Número de telefone"
-              {...register("phoneNumber")}
-            />
-            {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
-
-            <input
-              required
-              type="text"
-              placeholder="Cidade"
-              {...register("city")}
-            />
-            <input
-              required
-              type="text"
-              placeholder="Rua"
-              {...register("street")}
-            />
-            <input
-              required
-              type="text"
-              placeholder="Número da casa"
-              {...register("houseNumber")}
-            />
-            <input
-              required
-              type="text"
-              placeholder="Opcional"
-              {...register("opts")}
-            />
-          </div>
-
-          <Button>Criar Cliente</Button>
-        </NewEntity>
+        <Button outlined onClick={() => setOpenSheet(true)}>
+          <Plus size={16} color="#fff" />
+        </Button>
       </section>
 
       <ul>
@@ -246,7 +209,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                       </CardTitle>
 
                       <CardContent>
-                        <Image
+                        <img
                           width={32}
                           height={32}
                           src={`https://avatars.dicebear.com/api/bottts/${client.name}.svg`}
@@ -281,8 +244,8 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
                       />
 
                       <Check
-                        className="no-display"
                         data-icon="check"
+                        className="no-display"
                         onClick={() => handleEdit(client.id)}
                         size={16}
                         color="#fff"
@@ -350,6 +313,82 @@ const ClientPage: FC<ClientPageProps> = ({ clients, notFound }) => {
           </>
         )}
       </ul>
+
+      <BottomSheet
+        open={openSheet}
+        onDismiss={() => onDismiss()}
+        defaultSnap={({ snapPoints, lastSnap }) =>
+          lastSnap ?? Math.min(...snapPoints)
+        }
+        snapPoints={({ maxHeight }) => [
+          maxHeight - maxHeight / 2,
+          maxHeight * 0.8
+        ]}
+        header={<></>}
+        footer={
+          <SheetButton>
+            <Button outlined>Fechar</Button>
+          </SheetButton>
+        }
+      >
+        <NewEntityWrapper>
+          <NewEntity onSubmit={handleSubmit(handleClientRegister)}>
+            <input
+              required
+              autoFocus
+              type="text"
+              placeholder="Nome"
+              id="name"
+              {...register("name", {
+                required: "Você precisa colocar um nome pro seu cliente"
+              })}
+            />
+
+            <input
+              required
+              type="tel"
+              placeholder="Número de telefone"
+              id="phoneNumber"
+              {...register("phoneNumber")}
+            />
+            {errors.phoneNumber && <span>{errors.phoneNumber.message}</span>}
+
+            <input
+              required
+              type="text"
+              placeholder="Cidade"
+              id="city"
+              {...register("city")}
+            />
+
+            <input
+              required
+              type="text"
+              placeholder="Rua"
+              id="street"
+              {...register("street")}
+            />
+
+            <input
+              required
+              type="text"
+              placeholder="Número da casa"
+              id="houseNumber"
+              {...register("houseNumber")}
+            />
+
+            <input
+              required
+              type="text"
+              placeholder="Opcional"
+              id="opts"
+              {...register("opts")}
+            />
+
+            <Button>Criar Cliente</Button>
+          </NewEntity>
+        </NewEntityWrapper>
+      </BottomSheet>
     </Layout>
   )
 }

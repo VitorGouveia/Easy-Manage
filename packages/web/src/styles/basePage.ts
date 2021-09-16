@@ -6,13 +6,14 @@ export const Layout = styled.section`
 
   display: grid;
   grid-template-areas:
-    "search  search  search"
-    "content content entity"
-    "content content entity"
-    "content content entity";
+    "search  search  search  search  entity"
+    "content content content content content"
+    "content content content content content"
+    "content content content content content";
 
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 100px;
+  grid-template-rows: min-content;
+  gap: 2rem;
 
   padding: 1rem 2rem;
   margin-top: 1rem;
@@ -21,9 +22,8 @@ export const Layout = styled.section`
 
   @media (max-width: 475px) {
     grid-template-areas:
-      "search"
-      "entity"
-      "content";
+      "search  entity"
+      "content content";
 
     overflow: auto;
 
@@ -36,7 +36,8 @@ export const Layout = styled.section`
     }
 
     grid-template-columns: 1fr;
-    grid-template-rows: 100px auto;
+    grid-template-rows: 40px auto;
+    row-gap: 2rem;
   }
 
   input {
@@ -47,6 +48,23 @@ export const Layout = styled.section`
   .search {
     width: 100%;
     grid-area: search;
+    position: relative;
+
+    input {
+      height: 100%;
+    }
+
+    input:focus ~ svg {
+      stroke: var(--accent);
+    }
+
+    svg {
+      position: absolute;
+      top: 50%;
+      right: 1rem;
+      transform: translate(-50%, -50%);
+      transition: all 200ms;
+    }
   }
 
   h1 {
@@ -77,9 +95,17 @@ export const Layout = styled.section`
     display: flex;
     flex-direction: column;
     color: #dedede;
-    align-items: center;
+    align-items: flex-end;
     justify-content: flex-start;
+
+    width: 100%;
     height: 100%;
+
+    button {
+      width: 100%;
+      height: 100%;
+      padding: 0 1rem;
+    }
   }
 
   span {
@@ -91,35 +117,108 @@ export const Layout = styled.section`
   }
 `
 
-export const NewEntity = styled.form`
+export const NewEntityWrapper = styled.div`
   width: 100%;
   height: 100%;
-  padding-left: 1rem;
 
   display: flex;
   flex-direction: column;
 
   align-items: center;
+  justify-content: center;
+
+  padding: clamp(0.6rem, 2vmax, 2rem) 0;
+`
+
+export const NewEntity = styled.form`
+  width: 80%;
+  height: 100%;
+
+  display: grid;
+  grid-template-areas:
+    "name   phoneNumber phoneNumber"
+    "city   street      houseNumber"
+    "opts   opts        opts"
+    "button button    button";
+
+  @media (max-width: 475px) {
+    grid-template-areas:
+      "name"
+      "phoneNumber"
+      "city"
+      "street"
+      "houseNumber"
+      "opts"
+      "button";
+
+    grid-template-columns: 1fr;
+    gap: 0;
+
+    input {
+      border-radius: 0;
+
+      &:first-child {
+        border-top-left-radius: clamp(3px, 0.3rem, 12px);
+        border-top-right-radius: clamp(3px, 0.3rem, 12px);
+      }
+    }
+
+    button {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
+  }
+
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+
+  align-items: center;
+
+  gap: 1rem;
 
   input {
-    border-radius: 0;
-  }
+    width: 100%;
 
-  input:first-child {
-    border-radius: clamp(3px, 0.3rem, 12px);
-    border-end-end-radius: 0;
-    border-end-start-radius: 0;
-  }
+    &#name {
+      grid-area: name;
+    }
 
-  input:last-child {
-    border-radius: clamp(3px, 0.3rem, 12px);
-    border-start-start-radius: 0;
-    border-start-end-radius: 0;
+    &#phoneNumber {
+      grid-area: phoneNumber;
+    }
+
+    &#city {
+      grid-area: city;
+    }
+
+    &#street {
+      grid-area: street;
+    }
+
+    &#houseNumber {
+      grid-area: houseNumber;
+    }
+
+    &#opts {
+      grid-area: opts;
+    }
   }
 
   button {
+    grid-area: button;
     width: 100%;
-    margin-top: 2rem;
+  }
+`
+
+export const SheetButton = styled.div`
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    width: 80%;
   }
 `
 
