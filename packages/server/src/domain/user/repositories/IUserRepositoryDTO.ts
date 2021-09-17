@@ -3,7 +3,8 @@ import { User } from "@user/entities"
 import {
   User as UserORM,
   Item as ItemORM,
-  Client as ClientORM
+  Client as ClientORM,
+  Order as OrderORM
 } from "@infra/prisma"
 
 export type UserRequest = User
@@ -19,4 +20,5 @@ export type UserInfoResponse = {
   updatedAt: Date
   Client: ClientORM[]
   Item: ItemORM[]
+  Order: OrderORM[]
 }

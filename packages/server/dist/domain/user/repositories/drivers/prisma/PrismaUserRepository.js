@@ -8,7 +8,7 @@ exports.PrismaUserRepository = void 0;
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 const hideClientItem = {
-  CLient: false,
+  Client: false,
   Item: false,
   Order: false
 };
@@ -32,7 +32,8 @@ class PrismaUserRepository {
         },
         include: {
           Client: true,
-          Item: true
+          Item: true,
+          Order: true
         }
       });
     });

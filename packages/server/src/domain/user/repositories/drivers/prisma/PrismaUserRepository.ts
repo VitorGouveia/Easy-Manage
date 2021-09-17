@@ -8,7 +8,7 @@ import {
 import { PrismaClient } from "@infra/prisma"
 
 const hideClientItem = {
-  CLient: false,
+  Client: false,
   Item: false,
   Order: false
 }
@@ -34,7 +34,8 @@ export class PrismaUserRepository implements IUserRepository {
       },
       include: {
         Client: true,
-        Item: true
+        Item: true,
+        Order: true
       }
     })
   }
