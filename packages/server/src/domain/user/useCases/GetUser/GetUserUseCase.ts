@@ -16,7 +16,9 @@ export class GetUserUseCase {
   ) {}
 
   async execute({ token }: GetUserRequestDTO): Promise<GetUserResponseDTO> {
-    const { id: userId } = this.accessToken.validate(token) as Payload
+    const { id: userId } = this.accessToken.validate(
+      token.split(" ")[1]
+    ) as Payload
 
     const userExists = await this.userRepository.findById(userId)
 

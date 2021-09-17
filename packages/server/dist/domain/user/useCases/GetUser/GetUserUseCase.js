@@ -16,7 +16,7 @@ class GetUserUseCase {
   }) {
     const {
       id: userId
-    } = this.accessToken.validate(token);
+    } = this.accessToken.validate(token.split(" ")[1]);
     const userExists = await this.userRepository.findById(userId);
 
     if (!userExists) {
