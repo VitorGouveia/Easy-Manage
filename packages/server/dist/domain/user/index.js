@@ -11,6 +11,8 @@ var _AuthUser = require("./useCases/AuthUser");
 
 var _RefreshUserToken = require("./useCases/RefreshUserToken");
 
+var _GetUser = require("./useCases/GetUser");
+
 const user = {
   create: async (request, response) => {
     return _CreateUser.createUserController.handle(request, response);
@@ -20,6 +22,9 @@ const user = {
   },
   refreshToken: async (request, response) => {
     return _RefreshUserToken.refreshUserTokenController.handle(request, response);
+  },
+  list: async (request, response) => {
+    return _GetUser.getUserController.handle(request, response);
   }
 };
 exports.user = user;

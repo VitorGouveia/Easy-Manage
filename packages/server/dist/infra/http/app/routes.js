@@ -21,6 +21,7 @@ const router = (0, _express.Router)();
 /* USER */
 
 exports.router = router;
+router.get("/user", _token.accessTokenAuth, _user.user.list);
 router.post("/user", _user.user.create);
 router.post("/user/token/refresh", _token.accessTokenAuth, _user.user.refreshToken);
 /* ITEM */
