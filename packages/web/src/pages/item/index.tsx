@@ -28,7 +28,7 @@ type ItemPageProps = {
 }
 
 const ItemPage: FC<ItemPageProps> = ({ items }) => {
-  const { register, handleSubmit, setError, formState } = useForm()
+  const { register, handleSubmit, formState } = useForm()
   const { accessToken, user } = useAuth()
 
   const { errors } = formState

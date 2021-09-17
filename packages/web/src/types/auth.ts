@@ -31,3 +31,11 @@ export type Item = {
   discount: number
   quantity: number
 }
+
+export type Order = {
+  id: string
+  quantity: number
+  user: User
+  client: Client
+  item: Item
+}
