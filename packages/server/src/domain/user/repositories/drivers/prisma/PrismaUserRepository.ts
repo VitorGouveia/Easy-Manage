@@ -1,7 +1,17 @@
 import { IUserRepository } from "../../IUserRepository"
-import { UserRequest, UserResponse } from "../../IUserRepositoryDTO"
+import {
+  UserRequest,
+  UserResponse,
+  UserInfoResponse
+} from "../../IUserRepositoryDTO"
 
 import { PrismaClient } from "@infra/prisma"
+
+const hideClientItem = {
+  CLient: false,
+  Item: false,
+  Order: false
+}
 
 export class PrismaUserRepository implements IUserRepository {
   constructor(private client: PrismaClient) {}
@@ -10,6 +20,21 @@ export class PrismaUserRepository implements IUserRepository {
     return await this.client.user.findUnique({
       where: {
         id
+      },
+      include: {
+        ...hideClientItem
+      }
+    })
+  }
+
+  getInfo = async (id: string): Promise<UserInfoResponse> => {
+    return await this.client.user.findUnique({
+      where: {
+        id
+      },
+      include: {
+        Client: true,
+        Item: true
       }
     })
   }
@@ -18,6 +43,9 @@ export class PrismaUserRepository implements IUserRepository {
     return await this.client.user.findUnique({
       where: {
         email
+      },
+      include: {
+        ...hideClientItem
       }
     })
   }

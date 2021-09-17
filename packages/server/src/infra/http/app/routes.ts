@@ -10,6 +10,7 @@ import { order } from "@domain/order"
 export const router = Router()
 
 /* USER */
+router.get("/user", accessTokenAuth, user.list)
 router.post("/user", user.create)
 router.post("/user/token/refresh", accessTokenAuth, user.refreshToken)
 

@@ -1,7 +1,22 @@
 import { User } from "@user/entities"
 
-import { User as UserORM } from "@infra/prisma"
+import {
+  User as UserORM,
+  Item as ItemORM,
+  Client as ClientORM
+} from "@infra/prisma"
 
 export type UserRequest = User
 
 export type UserResponse = UserORM
+
+export type UserInfoResponse = {
+  id: string
+  name: string
+  email: string
+  password: string
+  createdAt: Date
+  updatedAt: Date
+  Client: ClientORM[]
+  Item: ItemORM[]
+}
