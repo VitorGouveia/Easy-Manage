@@ -230,6 +230,11 @@ export const Card = styled.li`
 
   position: relative;
 
+  *[data-text]::before {
+    content: attr(data-text);
+    margin-right: 0.4rem;
+  }
+
   svg {
     position: absolute;
 
@@ -295,7 +300,6 @@ interface CardContentProps {
 
 export const CardContent = styled.article<CardContentProps>`
   display: flex;
-
   justify-content: space-between;
 
   color: var(--white);

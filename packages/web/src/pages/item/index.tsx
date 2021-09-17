@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { FC, useRef, useState } from "react"
 import { parseCookies } from "nookies"
 import { useForm } from "react-hook-form"
-import { Trash, Edit2, Check } from "react-feather"
+import { Trash, Edit2, Check, Search, Plus } from "react-feather"
 import { AxiosError } from "axios"
 import { BottomSheet, BottomSheetRef } from "react-spring-bottom-sheet"
 
@@ -13,7 +13,6 @@ import { Item } from "types/auth"
 
 import {
   Layout,
-  NewEntity,
   Card,
   CardContent,
   CardTitle,
@@ -22,15 +21,19 @@ import {
   SheetButton
 } from "@styles/basePage"
 
+import { NewItem } from "@styles/pages/item"
+
 type ItemPageProps = {
   items: Item[]
 }
 
 const ItemPage: FC<ItemPageProps> = ({ items }) => {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, setError, formState } = useForm()
   const { accessToken, user } = useAuth()
 
-  const [itemList, setItemList] = useState<Item[]>([...items || []])
+  const { errors } = formState
+
+  const [itemList, setItemList] = useState<Item[]>([...(items || [])])
   const [searchItemList, setSearchItemList] = useState<Item[]>([])
   const [isEditing, setIsEditing] = useState(false)
   const [openSheet, setOpenSheet] = useState(false)
@@ -38,29 +41,19 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
   const sheetRef = useRef<BottomSheetRef>(null)
 
   const handleRegister = async (item: Omit<Item, "id">) => {
-    setItemList([
-      {
-        id: new Date().getTime().toString(),
-        ...item
-      },
-      itemList
-    ])
-
     try {
       const { data } = await CreateItem({ ...item }, accessToken)
-
       setItemList([
-        ...itemList,
         {
           id: data.item.id,
           ...item
-        }
+        },
+        ...itemList
       ])
     } catch (error) {
       const axiosError = error as AxiosError
 
       const APIError = axiosError.response.data.error
-
       console.log(APIError)
     }
   }
@@ -82,8 +75,20 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
     const headings: NodeListOf<HTMLElement> = document.querySelectorAll(
       `li[data-id="${id}"] h6`
     )
-    const texts = document.querySelectorAll(`li[data-id="${id}"] p`)
-    const small = document.querySelector(`li[data-id="${id}"] small`)
+
+    const texts: NodeListOf<HTMLElement> = document.querySelectorAll(
+      `li[data-id="${id}"] p`
+    )
+
+    const small: HTMLElement = document.querySelector(
+      `li[data-id="${id}"] small`
+    )
+    const name = headings[0].innerText
+    const price = Number(headings[1].innerText)
+
+    const description = texts[0].innerText
+    const quantity = Number(texts[1].innerText)
+    const discount = Number(small.innerText)
 
     const editIcon: HTMLElement = document.querySelector(
       `li[data-id="${id}"] svg[data-icon="edit"]`
@@ -110,21 +115,22 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
     }
 
     const itemListWithoutItem = itemList.filter(item => item.id !== id)
+
     const newItem: Item = {
       id,
-      name: headings[0].innerHTML,
-      description: texts[0].innerHTML,
-      quantity: Number(small.innerHTML.split("desconto:")[1]),
-      price: Number(headings[1].innerText.replace(/[^0-9.-]+/g, "")),
-      discount: Number(small.innerHTML.split("desconto: ")[1]),
+      name,
+      description,
+      quantity,
+      price,
+      discount,
       userId: user.id
     }
-    console.log(newItem)
+
     setItemList([
-      ...itemListWithoutItem,
       {
         ...newItem
-      }
+      },
+      ...itemListWithoutItem
     ])
 
     try {
@@ -144,7 +150,7 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
       item => item.name.includes(query) === true
     )
 
-    setSearchItemList(searchResult)
+    setSearchItemList([...searchResult])
   }
 
   return (
@@ -155,55 +161,23 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
           placeholder="Pesquise itens"
           onChange={event => handleSearch(event.target.value)}
         />
+
+        <Search size={16} color="#fff" />
       </div>
 
       <section>
-        <NewEntity onSubmit={handleSubmit(handleRegister)}>
-          <div>
-            <input
-              required
-              autoFocus
-              type="text"
-              placeholder="Nome"
-              {...register("name", {
-                required: "Você precisa colocar um nome pro seu item"
-              })}
-            />
-            <input
-              required
-              type="text"
-              placeholder="Descrição (opcional)"
-              {...register("description")}
-            />
-
-            <input
-              required
-              type="text"
-              placeholder="price"
-              {...register("price")}
-            />
-
-            <input
-              required
-              type="text"
-              placeholder="Desconto (opcional)"
-              {...register("discount")}
-            />
-
-            <input
-              required
-              type="text"
-              placeholder="Quantidade"
-              {...register("quantity")}
-            />
-          </div>
-
-          <Button>Criar Item</Button>
-        </NewEntity>
+        <Button
+          outlined
+          onClick={() => {
+            setOpenSheet(true)
+          }}
+        >
+          <Plus />
+        </Button>
       </section>
 
       <ul>
-        {itemList.length <= 0 || notFound ? (
+        {itemList.length <= 0 ? (
           <NotFoundCard>
             Não consegui achar nenhum item.
             <br />
@@ -235,9 +209,9 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
                         <h4>Preço</h4>
                       </CardTitle>
                       <CardContent type="outlined">
-                        <h6>{item.price}</h6>
-                        <p>qtd: {item.quantity}</p>
-                        <small>desconto: {item.discount}</small>
+                        <h6 data-text="Preço R$:">{item.price}</h6>
+                        <p data-text="QTD:">{item.quantity}</p>
+                        <small data-text="Desconto: R$">{item.discount}</small>
                       </CardContent>
 
                       <Trash
@@ -288,9 +262,9 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
                         <h4>Preço</h4>
                       </CardTitle>
                       <CardContent type="outlined">
-                        <h6>{item.price}</h6>
-                        <p>qtd: {item.quantity}</p>
-                        <small>desconto: {item.discount}</small>
+                        <h6 data-text="Preço R$:">{item.price}</h6>
+                        <p data-text="QTD:">{item.quantity}</p>
+                        <small data-text="Desconto: R$">{item.discount}</small>
                       </CardContent>
 
                       <Trash
@@ -321,6 +295,88 @@ const ItemPage: FC<ItemPageProps> = ({ items }) => {
           </>
         )}
       </ul>
+
+      <BottomSheet
+        open={openSheet}
+        blocking={false}
+        ref={sheetRef}
+        onDismiss={() => setOpenSheet(false)}
+        defaultSnap={({ snapPoints, lastSnap }) =>
+          lastSnap ?? Math.min(...snapPoints)
+        }
+        snapPoints={({ maxHeight }) => [
+          maxHeight - maxHeight / 10,
+          maxHeight / 6,
+          maxHeight * 0.6
+        ]}
+        header={<></>}
+        footer={
+          <SheetButton>
+            <Button
+              outlined
+              onClick={() =>
+                sheetRef.current.snapTo(({ snapPoints }) =>
+                  Math.min(...snapPoints)
+                )
+              }
+            >
+              Fechar
+            </Button>
+          </SheetButton>
+        }
+      >
+        <NewEntityWrapper>
+          <NewItem onSubmit={handleSubmit(handleRegister)}>
+            <input
+              required
+              autoFocus
+              type="text"
+              placeholder="Nome"
+              id="name"
+              {...register("name", {
+                required: "Você precisa dar um nome ao seu item!"
+              })}
+            />
+
+            <textarea
+              required
+              rows={4}
+              cols={40}
+              placeholder="Descrição"
+              id="description"
+              {...register("description")}
+            />
+
+            {errors.price && <span>{errors.price.message}</span>}
+            <input
+              required
+              type="number"
+              placeholder="Preço (números apenas)"
+              id="price"
+              {...register("price")}
+            />
+
+            <input
+              required
+              type="number"
+              placeholder="Desconto (números apenas)"
+              id="discount"
+              {...register("discount")}
+            />
+
+            <input
+              required
+              autoFocus
+              type="number"
+              placeholder="Quantidade (números apenas)"
+              id="quantity"
+              {...register("quantity")}
+            />
+
+            <Button>Criar Item</Button>
+          </NewItem>
+        </NewEntityWrapper>
+      </BottomSheet>
     </Layout>
   )
 }

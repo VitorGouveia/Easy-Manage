@@ -41,9 +41,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
 
   const handleClientRegister = async (client: Omit<Client, "id">) => {
     try {
-      
       const { data } = await CreateClient({ ...client }, accessToken)
-      
       setClientList([
         {
           id: data.client.id,
@@ -74,7 +72,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
     }
   }
 
-  const handleRemoveClient = async (id: string) => {
+  const handleRemove = async (id: string) => {
     setSearchClientList(searchClientList.filter(client => client.id !== id))
     setClientList(clientList.filter(client => client.id !== id))
 
@@ -227,7 +225,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
                       </CardContent>
 
                       <Trash
-                        onClick={() => handleRemoveClient(client.id)}
+                        onClick={() => handleRemove(client.id)}
                         size={16}
                         color="#fff"
                       />
@@ -282,7 +280,7 @@ const ClientPage: FC<ClientPageProps> = ({ clients }) => {
                       </CardContent>
 
                       <Trash
-                        onClick={() => handleRemoveClient(client.id)}
+                        onClick={() => handleRemove(client.id)}
                         size={16}
                         color="#fff"
                       />

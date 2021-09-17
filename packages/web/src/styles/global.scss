@@ -117,7 +117,9 @@ small {
   font-weight: 400;
 }
 
-input {
+input,
+textarea {
+  font-family: "Inter";
   outline: 0;
   color: var(--white);
   padding: clamp(0.6rem, 1.4vmax, 1.8rem) 1rem;
