@@ -283,8 +283,8 @@ export const Footer = styled.footer`
 
   width: 100%;
   display: grid;
-  grid-template-areas: "logo products cases";
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: "logo products cases faq";
+  grid-template-columns: repeat(4, 1fr);
 
   h4,
   a {

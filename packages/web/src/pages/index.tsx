@@ -232,6 +232,17 @@ const Home = () => {
             </li>
           </FooterList>
         </section>
+
+        <section data-id="4">
+          <FooterTitle>Perguntas</FooterTitle>
+          <FooterList>
+            <li>
+              <Link name="faq" url="/faq">
+                FAQ
+              </Link>
+            </li>
+          </FooterList>
+        </section>
       </Footer>
     </HomeContainer>
   )
