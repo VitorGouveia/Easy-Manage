@@ -30,6 +30,7 @@ const OrderPage: FC<OrderPageType> = ({ user }) => {
   const { accessToken } = useAuth()
 
   const [orderList, setOrderList] = useState<Order[]>([...(user.Order || [])])
+  const [orderItem, setOrderItem] = useState<Item>()
   const [openSheet, setOpenSheet] = useState(false)
   const selectRef = useRef<HTMLSelectElement>(null)
   const sheetRef = useRef<BottomSheetRef>(null)
@@ -37,13 +38,15 @@ const OrderPage: FC<OrderPageType> = ({ user }) => {
   const handleRegister = async (order: OrderRegisterForm) => {
     try {
       const item = user.Item.find(item => item.name === order.item)
-
+      setOrderItem(item)
       const newItem: Item = {
         ...item,
         quantity: item.quantity - order.itemqtd * order.quantity
       }
 
-      console.log(newItem.quantity)
+      if (newItem.quantity < 0) {
+        throw new Error("your item quantity is less than zero.")
+      }
 
       /* remove the quantity of items from the item * the order */
       await UpdateItem(item.id, accessToken, newItem)
@@ -59,10 +62,17 @@ const OrderPage: FC<OrderPageType> = ({ user }) => {
         ...orderList
       ])
     } catch (error) {
-      const axiosError = error as AxiosError
-      const APIError = axiosError.response.data.error
+      console.log(orderItem)
+      if (error.message === "your item quantity is less than zero.") {
+        alert(
+          `Você excedeu a quantidade de itens disponível no seu estoque, a quantidade de ${orderItem.name} máxima que você tem no estoque é de ${orderItem.quantity}`
+        )
+      } else {
+        const axiosError = error as AxiosError
+        const APIError = axiosError.response.data.error
 
-      console.log(APIError)
+        console.log(APIError)
+      }
     }
   }
 
