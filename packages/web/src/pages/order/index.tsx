@@ -7,9 +7,9 @@ import { AxiosError } from "axios"
 import { BottomSheet, BottomSheetRef } from "react-spring-bottom-sheet"
 
 import { Button } from "@components"
-import { getInfo, getInfoResponse } from "@services"
-import { useAuth } from "hooks"
-import { Order } from "types/auth"
+import { useAuth } from "@hooks"
+import { getInfo, getInfoResponse, UpdateItem } from "@services"
+import { Item, Order } from "types/auth"
 
 import { SheetButton, NewEntityWrapper } from "@styles/basePage"
 import { OrderContainer, NewOrder, History } from "@styles/pages/order"
@@ -22,10 +22,12 @@ type OrderRegisterForm = {
   client: string
   item: string
   quantity: number
+  itemqtd: number
 }
 
 const OrderPage: FC<OrderPageType> = ({ user }) => {
   const { register, handleSubmit } = useForm()
+  const { accessToken } = useAuth()
 
   const [orderList, setOrderList] = useState<Order[]>([...(user.Order || [])])
   const [openSheet, setOpenSheet] = useState(false)
@@ -34,11 +36,22 @@ const OrderPage: FC<OrderPageType> = ({ user }) => {
 
   const handleRegister = async (order: OrderRegisterForm) => {
     try {
-      console.log(orderList)
+      const item = user.Item.find(item => item.name === order.item)
+
+      const newItem: Item = {
+        ...item,
+        quantity: item.quantity - order.itemqtd * order.quantity
+      }
+
+      console.log(newItem.quantity)
+
+      /* remove the quantity of items from the item * the order */
+      await UpdateItem(item.id, accessToken, newItem)
+
       setOrderList([
         {
           client: user.Client.find(client => client.name === order.client),
-          item: user.Item.find(item => item.name === order.item),
+          item: newItem,
           quantity: order.quantity,
           user,
           id: new Date().getTime().toString()
@@ -84,7 +97,7 @@ const OrderPage: FC<OrderPageType> = ({ user }) => {
             <>
               {orderList.map(order => {
                 return (
-                  <article tabIndex={4}>
+                  <article key={order.id} tabIndex={4}>
                     <span>{order.client.name}</span>
                     <span>{order.item.name}</span>
                     <span>{order.item.quantity}</span>
@@ -170,7 +183,11 @@ const OrderPage: FC<OrderPageType> = ({ user }) => {
             <label htmlFor="client">Clientes</label>
             <select required id="client" name="client" {...register("client")}>
               {user.Client.map(client => {
-                return <option value={client.name}>{client.name}</option>
+                return (
+                  <option key={client.id} value={client.name}>
+                    {client.name}
+                  </option>
+                )
               })}
             </select>
 
