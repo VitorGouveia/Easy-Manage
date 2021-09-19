@@ -5,6 +5,7 @@ import { Order } from "@order/entities"
 export interface CreateOrderRequestDTO {
   quantity: number
   itemId: string
+  clientId: string
   token: string
 }
 
