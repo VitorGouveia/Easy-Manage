@@ -40,10 +40,14 @@ export const Auth: FC = ({ children }) => {
   const [accessToken, setAccessToken] = useState<AccessToken | null>(null)
   const [refreshToken, setRefreshToken] = useState<RefreshToken | null>(null)
   const [user, setUser] = useState<User | null>(null)
-  const { push } = useRouter()
+  const { push, pathname } = useRouter()
   const isAuthenticated = !!user
 
   useEffect(() => {
+    console.log(pathname)
+
+    const isHomePage = pathname === "/"
+    console.log(isHomePage)
     const { "fastgas.token": token } = parseCookies()
 
     if (token) {
@@ -64,7 +68,9 @@ export const Auth: FC = ({ children }) => {
         })
       })
     } else {
-      push("/login")
+      if (!isHomePage) {
+        push("/login")
+      }
     }
   }, [])
 
